@@ -7,7 +7,7 @@
 <script>
 import Vue from "vue";
 import VueFormGenerator from "vue-form-generator";
-
+import "vue-form-generator/dist/vfg.css";  // optional core css additions
 Vue.use(VueFormGenerator);
 
 export default {
@@ -23,53 +23,37 @@ export default {
             status: true
         },
         schema: {
-            fields: [
-            {
-                type: "input",
-                inputType: "text",
-                label: "ID (disabled text field)",
-                model: "id",
-                readonly: true,
-                disabled: true
-            },
-            {
-                type: "input",
-                inputType: "text",
-                label: "Name",
-                model: "name",
-                placeholder: "Your name",
-                featured: true,
-                required: true
-            },
-            {
-                type: "input",
-                inputType: "password",
-                label: "Password",
-                model: "password",
-                min: 6,
-                required: true,
-                hint: "Minimum 6 characters",
-                validator: VueFormGenerator.validators.string
-            },
-            {
-                type: "select",
-                label: "Skills",
-                model: "skills",
-                values: ["Javascript", "VueJS", "CSS3", "HTML5"]
-            },
-            {
-                type: "input",
-                inputType: "email",
-                label: "E-mail",
-                model: "email",
-                placeholder: "User's e-mail address"
-            },
-            {
-                type: "checkbox",
-                label: "Status",
-                model: "status",
-                default: true
-            }
+            groups: [
+                {
+                    legend: "Step1. Define RFID",
+                    fields: [
+                        {
+                            type: "label",
+                            label: "Select or input the RFID of the new tag."
+                        },
+                        {
+                            type: "input",
+                            inputType: "text",
+                            label: "Manual input",
+                        },
+                        {
+                            type: "select",
+                            label: "Automatic detection",
+                            values: []
+                        }
+                    ]
+                }, 
+                {
+                    legend: "Step2. Which category is this tag?",
+                    fields: [
+                        {
+                            type: "select",
+                            values: [
+                                "Interaction", "Sensor"
+                            ]
+                        }
+                    ]
+                }
             ]
         },
         formOptions: {
