@@ -1,7 +1,6 @@
 <template>
   <div class="interaction-body">
     <vue-form-generator :schema="schema" :model="model" :options="formOptions"></vue-form-generator>
-    <button id="contBtn" v-on:click="submitBtnClicked">Submit</button>
   </div>
 </template>
 
@@ -16,8 +15,9 @@ export default {
   name: "Interaction",
   data() {
     return {
-      model:{
-
+      model: {
+        RFID: "",
+        Objects: []
       },
       schema: {
         groups: [
@@ -25,19 +25,34 @@ export default {
             legend: "Step3. Define interaction behavior",
             fields: [
               {
-                label: "1. Do you want to input manully or select from existed objects?",
+                label:
+                  "1. Do you want to input manully or select from existed objects?",
                 type: "select",
-                values: ['Manually input', 'Select from existed list'],
+                values: ["Manually input", "Select from existed list"]
               },
               {
                 type: "input",
                 inputType: "text",
+                model: "RFID",
                 label: "2. Input the related objects of this tag."
               },
               {
                 type: "select",
+                model: "RFID",
                 label: "or choose from the list",
                 values: []
+              }
+            ]
+          },
+          {
+            fields: [
+              {
+                type: "submit",
+                buttonText: "Submit",
+                onSubmit: function(model) {
+                  alert(JSON.stringify(model));
+                  router.replace({ name: "Form" });
+                }
               }
             ]
           }
@@ -47,10 +62,6 @@ export default {
         validateAfterLoad: true,
         validateAfterChanged: true,
         validateAsync: true
-      },
-      submitBtnClicked: function(event) {
-        alert("Successfully submitted");
-        router.replace({ name: "Form" });
       }
     };
   }
