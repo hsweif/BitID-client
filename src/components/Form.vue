@@ -1,27 +1,21 @@
 <template>
   <div class="panel-body">
     <vue-form-generator :schema="schema" :model="model" :options="formOptions"></vue-form-generator>
+    <button id="contBtn" v-on:click="contBtnClicked" >Continue</button>
   </div>
 </template>
 
 <script>
 import Vue from "vue";
 import VueFormGenerator from "vue-form-generator";
-import "vue-form-generator/dist/vfg.css";  // optional core css additions
+import "vue-form-generator/dist/vfg.css";
+import router from "../router/index"
 Vue.use(VueFormGenerator);
 
 export default {
     name: 'Form',
     data() {
         return {
-        model: {
-            id: 1,
-            name: "John Doe",
-            password: "J0hnD03!x4",
-            skills: ["Javascript", "VueJS"],
-            email: "john.doe@gmail.com",
-            status: true
-        },
         schema: {
             groups: [
                 {
@@ -60,6 +54,10 @@ export default {
             validateAfterLoad: true,
             validateAfterChanged: true,
             validateAsync: true
+        },
+        contBtnClicked: function(event) {
+            // TODO: Jump to different page which depends on tag category.
+            router.push({name: 'interaction'});
         }
     };
   }
