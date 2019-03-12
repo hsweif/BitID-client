@@ -1,6 +1,8 @@
 <template>
   <div class="panel-body">
     <vue-form-generator :schema="schema" :model="model" :options="formOptions"></vue-form-generator>
+    <select name="test" id="test">
+    </select>
   </div>
 </template>
 
@@ -9,6 +11,7 @@ import Vue from "vue";
 import VueFormGenerator from "vue-form-generator";
 import "vue-form-generator/dist/vfg.css";
 import router from "../router/index";
+import tagData from "../global";
 Vue.use(VueFormGenerator);
 
 export default {
@@ -16,7 +19,7 @@ export default {
   data() {
     return {
       model: {
-        RFID: "testing",
+        RFID: "",
         TagType: ""
       },
       schema: {
@@ -38,7 +41,9 @@ export default {
                 type: "select",
                 model: "RFID",
                 label: "Automatic detection",
-                values: []
+                values: function(){
+                  // TODO: Add detection for tags with rssi over threshold.
+                }
               }
             ]
           },
@@ -58,8 +63,17 @@ export default {
                 type: "submit",
                 buttonText: "Continue",
                 onSubmit: function(model) {
-                  alert(JSON.stringify(model));
-                  router.push({name: 'interaction'});
+                  alert(JSON.stringify(tagData));
+                  if(model.TagType === "Interaction" || model.TagType === "Sensor")
+                  {
+                    tagData['RFID'] = model.RFID;
+                    tagData['TagType'] = model.TagType;
+                    router.push({name: model.TagType});
+                  }
+                  else
+                  {
+                    alart("Please select your tag type");
+                  }
                 }
               }
             ]

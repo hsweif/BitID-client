@@ -25,22 +25,57 @@ export default {
             legend: "Step3. Define interaction behavior",
             fields: [
               {
-                label:
-                  "1. Do you want to input manully or select from existed objects?",
                 type: "select",
-                values: ["Manually input", "Select from existed list"]
+                label: "When the tag is ON/OFF:",
+                values: ["ON", "OFF"]
               },
               {
                 type: "input",
                 inputType: "text",
-                model: "RFID",
-                label: "2. Input the related objects of this tag."
+                label: "Semantic meaning of this state.",
+                buttons: [
+                  {
+                    classes: "sem_btn",
+                    label: "Add",
+                    onclick: function(model){
+                      alert("successfully add");
+                    }
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            legend: "Step4(Optional). Define related behavior",
+            fields: [
+              {
+                type: "select",
+                label: "When the tag is ON/OFF:",
+                values: ["ON", "OFF"]
+              },
+              {
+                type: "input",
+                inputType: "text",
+                label: "Please input the name of the related object"
               },
               {
                 type: "select",
-                model: "RFID",
-                label: "or choose from the list",
-                values: []
+                label: "When the state of that object is ON/OFF:",
+                values: ["ON", "OFF"]
+              },
+              {
+                type: "input",
+                inputType: "text",
+                label: "Semantic meaning.",
+                buttons: [
+                  {
+                    classes: "sem_btn",
+                    label: "Add",
+                    onclick: function(model){
+                      alert("successfully add");
+                    }
+                  }
+                ]
               }
             ]
           },

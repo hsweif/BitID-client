@@ -14,13 +14,13 @@ export default new Router({
       component: Form 
     },
     {
-      path: 'interaction',
-      name: 'interaction',
+      path: 'Interaction',
+      name: 'Interaction',
       component: Interaction
     },
     {
-      path: 'sensor',
-      name: 'sensor',
+      path: 'Sensor',
+      name: 'Sensor',
       component: Sensor
     }
   ]
