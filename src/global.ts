@@ -1,6 +1,7 @@
-let tagData = {
+export let tagData = {
   RFID: '',
   TagType: '',
   Semantic: []
 }
-export default tagData
+
+export const saveAPI = 'http://localhost:8888/save-tag'
