@@ -6,6 +6,7 @@ export let tagData = {
 
 export const saveAPI = 'http://localhost:8888/save-tag'
 export const epcAPI = 'http://localhost:8888/update-epc'
+export const serverHost = 'http://localhost:8888'
 export let epcList = [1,3,4]
 
 

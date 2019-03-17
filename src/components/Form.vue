@@ -1,10 +1,6 @@
 <template>
   <div class="panel-body">
     <vue-form-generator :schema="schema" :model="model" :options="formOptions"></vue-form-generator>
-    <select v-model="selected">
-      <option v-for="option in options" v-bind:key="option">{{ option }}</option>
-    </select>
-    <span>Selected: {{ selected }}</span>
   </div>
 </template>
 
@@ -16,10 +12,6 @@ import VueFormGenerator from "vue-form-generator";
 import "vue-form-generator/dist/vfg.css";
 import router from "../router/index";
 import { tagData, epcAPI, epcList, changeEpc } from "../global";
-import axios from "axios";
-const request = require("request");
-const schedule = require("node-schedule");
-const rp = require("request-promise");
 
 Vue.use(VueFormGenerator);
 
@@ -43,56 +35,34 @@ export default {
             fields: [
               {
                 type: "label",
-                label: "Select or input the RFID of the new tag."
+                label: "Automatically detect or manually input the EPC of the new tag."
               },
               {
                 type: "input",
                 inputType: "text",
                 model: "RFID",
                 label: "Manual input",
-                placeholder: "Please input the epc of the tag"
-              },
-              {
-                type: "select",
-                model: "RFID",
-                id: "auto_rfid",
-                label: "Automatic detection",
-                values: function() {
-                  // let response = undefined;
-                  // try {
-                  //   response = await request(epcAPI);
-                  //   response = [3, 3, 3];
-                  // } catch (err) {
-                  //   return ["x"];
-                  // }
-                  // resolve(response['epc'])
-                  return epcList;
-                  /*
-                  rp(options)
-                    .then(function(repos) {
-                      return repos;
-                    })
-                    .catch(function(err) {
-                      return [4, 5, 6];
-                    });
-                    */
-                },
+                placeholder: "Please input the epc of the tag",
+                required: true,
                 buttons: [
                   {
-                    classes: "refresh_btn",
-                    label: "Refresh",
+                    classes: "detect_btn",
+                    label: "Detect",
                     onclick: function(model) {
                       let xhr = new XMLHttpRequest();
+                      let vm = this;
+                      xhr.open("GET", epcAPI, true);
                       xhr.timeout = 3000;
                       xhr.onreadystatechange = function() {
                         if (xhr.readyState == 4) {
-                          alert(this.responseText);
-                          model.RFID = this.status;
+                          alert("Succesfully detected.");
+                          model.RFID = this.responseText;
+                        }
+                        else{
+                          alert("Fail to detect, please input manually or checkt the python server");
                         }
                       };
-                      xhr.open("GET", epcAPI, true);
-                      xhr.send();
-                      model.RFID = xhr.response;
+                      xhr.send(null);
                     }
                   }
                 ]
@@ -101,6 +71,8 @@ export default {
           },
           {
             legend: "Step2. Which category is this tag?",
+            placeholder: "Tag type.",
+            required: true,
             fields: [
               {
                 type: "select",
@@ -115,7 +87,6 @@ export default {
                 type: "submit",
                 buttonText: "Continue",
                 onSubmit: function(model) {
-                  // alert(JSON.stringify(tagData));
                   if (
                     model.TagType === "Interaction" ||
                     model.TagType === "Sensor"
@@ -139,31 +110,6 @@ export default {
         validateAfterLoad: true,
         validateAfterChanged: true,
         validateAsync: true
-      },
-      methods: {
-        getRFIDList() {
-          this.options.data = [3, 3, 3];
-        },
-        getPeoples: function() {
-          alert("get");
-          var vm = this;
-          $.ajax({
-            url: epcAPI,
-            type: "get",
-            dataType: "json",
-            success: function(data) {
-              vm.$set("options", data.result);
-            },
-            error: function(xhr, errorType, error) {
-              alert(
-                "Ajax request error, errorType: " +
-                  errorType +
-                  ", error: " +
-                  error
-              );
-            }
-          });
-        }
       }
     };
   }
