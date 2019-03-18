@@ -1,9 +1,9 @@
 <template>
   <div class="sensor-body">
-    <select v-model="selected">
+    <select v-model="selected" @change="listChange">
       <option v-for="option in options" v-bind:key="option">{{ option }}</option>
     </select>
-    <button v-on:click="Refresh">Refresh</button>
+    <button v-on:click="Refresh">refresh</button>
   </div>
 </template>
 
@@ -14,11 +14,9 @@ import Multiselect from "vue-multiselect";
 // register globally
 Vue.component("multiselect", Multiselect);
 export default Vue.extend({
-  props:[
-    'selected'
-  ],
   data() {
     return {
+      selected: '',
       value: null,
       options: [1, 2, 3]
     };
@@ -30,10 +28,15 @@ export default Vue.extend({
       let vm = this;
       xhr.onreadystatechange = function() {
         if (xhr.readyState == 4) {
-          vm.$data.options = Array(xhr.responseText['objects']);
+          let response = JSON.parse(xhr.responseText)
+          vm.$data.options = response['objects'];
+          alert('Successful to refresh')
         }
       };
       xhr.send(null);
+    },
+    listChange: function(){
+      this.$emit('selectList', this.selected);
     }
   }
 });

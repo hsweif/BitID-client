@@ -4,7 +4,7 @@ import Form from '@/components/Form'
 import Interaction from '@/components/Interaction'
 import Sensor from '@/components/Sensor'
 import ObjectList from '@/components/ObjectList'
-import Home from '@/components/Home'
+import NewSensor from '@/components/NewSensor'
 
 Vue.use(Router)
 
@@ -12,8 +12,8 @@ export default new Router({
   routes: [
     {
       path: '/',
-      name: 'Home',
-      component: Home 
+      name: 'Form',
+      component: Form 
     },
     {
       path: 'Interaction',
@@ -23,7 +23,7 @@ export default new Router({
     {
       path: 'Sensor',
       name: 'Sensor',
-      component: Sensor
+      component: NewSensor 
     }
   ]
 })

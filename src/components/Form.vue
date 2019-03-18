@@ -56,10 +56,7 @@ export default {
                       xhr.onreadystatechange = function() {
                         if (xhr.readyState == 4) {
                           alert("Succesfully detected.");
-                          model.RFID = this.responseText;
-                        }
-                        else{
-                          alert("Fail to detect, please input manually or checkt the python server");
+                          model.RFID = xhr.responseText;
                         }
                       };
                       xhr.send(null);
