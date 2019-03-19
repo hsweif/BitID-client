@@ -5,6 +5,7 @@ import Interaction from '@/components/Interaction'
 import Sensor from '@/components/Sensor'
 import ObjectList from '@/components/ObjectList'
 import NewSensor from '@/components/NewSensor'
+import Notification from '@/components/Notification'
 
 Vue.use(Router)
 

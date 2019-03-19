@@ -1,39 +1,39 @@
 <template>
-  <div>
-    <div style="float: middle">
+<table border="1" style="float: middle">
+  <tr>
       <span>1. Select the object name from the list or input manually</span>
-    </div>
-    <div style="float: middle">
-      <input type="radio" id="one" value="Manually" v-model="picked">
+  </tr>
+  <tr>
       <input v-model="objectName" placeholder="Input manually">
-      <br>
-      <input type="radio" id="two" value="Auto" v-model="picked">
-      <label for="two">Select from the list</label>
+  </tr>
+  <tr>
       <objList @selectList="getSelected"></objList>
-    </div>
-    <div style="float: middle">
+  </tr>
+    <tr>
+    <span>2. Define the state</span>
       <select v-model="state">
-        <option disabled value>Define the state</option>
+        <option disabled value>Unselected</option>
         <option>ON</option>
         <option>OFF</option>
       </select>
-    </div>
-    <div style="float: middle">
-      <span>2. Define the semantic meaning.</span>
+    </tr>
+    <tr>
+      <span>3. Define the semantic meaning.</span>
       <input v-model="semantic">
-    </div>
-    <div>
+    </tr>
+    <tr>
       <button v-on:click="Submit">Submit</button>
-    </div>
-  </div>
+    </tr>
+</table>
 </template>
 
 <script lang="ts">
 import Vue from "vue";
-import ObjectList from "./ObjectList.vue";
-import { tagData, saveAPI, serverHost } from "../global";
+import { tagData, saveAPI, serverHost, reset } from "../global";
 import router from "../router/index";
+import ObjectList from "./ObjectList.vue";
 Vue.component("objList", ObjectList);
+
 
 export default Vue.extend({
   data() {
@@ -60,6 +60,7 @@ export default Vue.extend({
       xhr.onreadystatechange = function() {
         if (xhr.readyState == 4) {
           alert("successfully submitted");
+          reset();
           router.replace({ name: "Form" });
         }
       };

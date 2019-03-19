@@ -13,3 +13,11 @@ export let epcList = [1,3,4]
 export function changeEpc () {
   epcList = [3,4,3];
 }
+
+export function reset(){
+  tagData = {
+    RFID: '',
+    TagType: '',
+    Semantic: []
+  }
+}

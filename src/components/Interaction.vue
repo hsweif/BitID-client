@@ -1,10 +1,12 @@
 <template>
-  <div>
-    <div style="float: middle">
+<table border="1" style="float: middle">
+  <tr>
       <span>Please define the tag behavior:</span>
-    </div>
-    <div style="float: middle">
+  </tr>
+  <tr>
       <span>Combination behavior. (with other objects)</span>
+  </tr>
+  <tr>
       <span>If this object is</span>
       <select v-model="self_state">
         <option disabled value>Define the state</option>
@@ -12,35 +14,37 @@
         <option>OFF</option>
       </select>
       <span>and the object (optional)</span>
-      <input type="radio" id="one" value="Manually" v-model="picked">
+  </tr>
+  <tr>
       <input v-model="relatedObj" placeholder="Input manually">
-      <br>
-      <input type="radio" id="two" value="Auto" v-model="picked">
-      <label for="two">Select from the list</label>
       <objList @selectList="getSelected"></objList>
+  </tr>
+  <tr>
       <span>is on state</span>
       <select v-model="relatedState">
         <option disabled value>Unselected</option>
         <option>ON</option>
         <option>OFF</option>
       </select>
-    </div>
-    <div style="float: middle">
-      <span>The semantic meaning is:</span>
+  </tr>
+  <tr>
+      <span>then the semantic meaning is:</span>
       <input v-model="sem_comb">
-    </div>
-    <div>
+  </tr>
+  <tr>
+    <td>
       <button v-on:click="Add">Add</button>
-    </div>
-    <div>
+    </td>
+    <td>
       <button v-on:click="Submit">Submit</button>
-    </div>
-  </div>
+    </td>
+  </tr>
+</table>
 </template>
 
 <script lang="ts">
 import Vue from "vue";
-import { tagData, saveAPI, serverHost } from "../global";
+import { tagData, saveAPI, serverHost, reset } from "../global";
 import router from "../router/index";
 export default Vue.extend({
   data() {
@@ -71,6 +75,7 @@ export default Vue.extend({
       xhr.onreadystatechange = function() {
         if (xhr.readyState == 4) {
           alert("successfully submitted");
+          reset();
           router.replace({ name: "Form" });
         }
       };

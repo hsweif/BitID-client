@@ -55,8 +55,13 @@ export default {
                       xhr.timeout = 3000;
                       xhr.onreadystatechange = function() {
                         if (xhr.readyState == 4) {
-                          alert("Succesfully detected.");
-                          model.RFID = xhr.responseText;
+                          if(xhr.responseText != 'None') {
+                            alert("Succesfully detected.");
+                            model.RFID = xhr.responseText;
+                          }
+                          else{
+                            alert("Fail");
+                          }
                         }
                       };
                       xhr.send(null);
