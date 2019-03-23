@@ -1,0 +1,3 @@
+[submodule "vue-formbuilder"]
+	path = vue-formbuilder
+	url = https://github.com/mrabit/vue-formbuilder

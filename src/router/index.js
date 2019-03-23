@@ -6,6 +6,7 @@ import Sensor from '@/components/Sensor'
 import ObjectList from '@/components/ObjectList'
 import NewSensor from '@/components/NewSensor'
 import Notification from '@/components/Notification'
+import index from '@/components/index'
 
 Vue.use(Router)
 
@@ -14,7 +15,7 @@ export default new Router({
     {
       path: '/',
       name: 'Form',
-      component: Form 
+      component: index 
     },
     {
       path: 'Interaction',

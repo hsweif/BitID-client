@@ -1,3 +1,4 @@
 {
-    "terminal.explorerKind": "external"
+    "terminal.explorerKind": "external",
+    "python.pythonPath": "C:\\Users\\Alex\\AppData\\Local\\Programs\\Python\\Python37\\python.exe"
 }
