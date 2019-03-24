@@ -9,7 +9,7 @@ import cascaderMulti from 'cascader-multi'
 import iviewArea from 'iview-area'
 import custom_form from './components/custom_form'
 
-import axios from 'axios';
+import axios from 'axios'
 
 Vue.config.productionTip = false
 Vue.use(iview)
@@ -17,7 +17,8 @@ Vue.use(cascaderMulti)
 Vue.use(custom_form)
 Vue.use(iviewArea)
 
-Vue.config.productionTip = false
+// axios.defaults.baseURL = '/apis';
+Vue.prototype.$http = axios
 
 /* eslint-disable no-new */
 const server = new Vue({

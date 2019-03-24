@@ -31,7 +31,7 @@ export let radioConf = {
   // 是否可配置
   config: true,
   // 控件左侧label内容
-  label: '单选框',
+  label: 'Detected',
   // 是否显示行内元素
   inlineBlock: false,
   // 是否必填
@@ -39,7 +39,7 @@ export let radioConf = {
   // 绑定的值
   value: '',
   // 选项内数据
-  items: [{ "label_value": "1", "label_name": "单选框1" }, { "label_value": "2", "label_name": "单选框2" }],
+  items: [{ "label_value": "1", "label_name": "Detected" }, { "label_value": "2", "label_name": "Undetected" }],
   // 表单name
   name: '',
   // 验证错误提示信息

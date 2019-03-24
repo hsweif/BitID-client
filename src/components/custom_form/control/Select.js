@@ -3,7 +3,7 @@ export default (_self, h) => {
     h(
       "Select", {
         props: {
-          placeholder: _self.obj.placeholder || "这是一个下拉选项框",
+          placeholder: _self.obj.placeholder || "Please select an object",
           value: _self.obj.value || ''
         },
         on: {
@@ -36,18 +36,19 @@ export let selectConf = {
   // 是否可配置
   config: true,
   // 控件左侧label内容
-  label: '选择框',
+  label: 'Object',
   placeholder: '',
   // 是否显示行内元素
   inlineBlock: false,
   // 是否必填
   require: true,
   // 选项内数据
+  // TODO: Change the info here.
   items: Array.apply(null, { length: 5 })
     .map((k, v) => {
       return {
         label_value: v + 1,
-        label_name: "选项" + (v + 1),
+        label_name: "Option" + (v + 1),
       }
     }),
   // 绑定的值

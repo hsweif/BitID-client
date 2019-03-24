@@ -3,7 +3,7 @@ export default (_self, h) => {
     h("Input", {
       attrs: {
         type: "textarea",
-        placeholder: _self.obj.placeholder || "这是一个文本域",
+        placeholder: _self.obj.placeholder || "Semantic meaning.",
         value: _self.obj.value,
         maxlength: _self.obj.maxLength || 200
       },
@@ -29,7 +29,7 @@ export let textConf = {
   // 是否可配置
   config: true,
   // 控件左侧label内容
-  label: '文本域',
+  label: 'Semantic Meaning',
   placeholder: '',
   // 是否显示行内元素
   inlineBlock: false,
