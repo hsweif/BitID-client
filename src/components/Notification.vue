@@ -2,7 +2,7 @@
   <div>
     <objList @selectList="getSelected"></objList>
     <button v-on:click="Confirm">Confirm</button>
-    <li v-for="item in items">{{ item.tag }} : {{item.state}}</li>
+    <li v-for="item in items">{{ item }}</li>
   </div>
 </template>
 
@@ -17,7 +17,7 @@ export default Vue.extend({
   data() {
     return {
       selectedObj: "",
-      items: [{ tag: "tag1", state: "off" }, { tag: "tag2", state: "off" }]
+      items: []
     };
   },
   methods: {

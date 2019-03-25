@@ -30,7 +30,6 @@ export default Vue.extend({
         if (xhr.readyState == 4) {
           let response = JSON.parse(xhr.responseText)
           vm.$data.options = response['objects'];
-          alert('Successful to refresh')
         }
       };
       xhr.send(null);

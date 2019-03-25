@@ -25,13 +25,13 @@ export default {
       selected: "A",
       options: epcList,
       model: {
-        RFID: "",
+        EPC: "",
         TagType: ""
       },
       schema: {
         groups: [
           {
-            legend: "Step1. Define RFID",
+            legend: "Step1. Define EPC",
             fields: [
               {
                 type: "label",
@@ -40,9 +40,9 @@ export default {
               {
                 type: "input",
                 inputType: "text",
-                model: "RFID",
+                model: "EPC",
                 label: "Manual input",
-                placeholder: "Please input the epc of the tag",
+                placeholder: "Keep empty if you just want to check the state",
                 required: true,
                 buttons: [
                   {
@@ -57,7 +57,7 @@ export default {
                         if (xhr.readyState == 4) {
                           if(xhr.responseText != 'None') {
                             alert("Succesfully detected.");
-                            model.RFID = xhr.responseText;
+                            model.EPC = xhr.responseText;
                           }
                           else{
                             alert("Fail");
@@ -79,7 +79,7 @@ export default {
               {
                 type: "select",
                 model: "TagType",
-                values: ["Interaction", "Sensor"]
+                values: ["Interaction", "Sensor", "Notification"]
               }
             ]
           },
@@ -93,11 +93,11 @@ export default {
                     model.TagType === "Interaction" ||
                     model.TagType === "Sensor"
                   ) {
-                    tagData["RFID"] = model.RFID;
+                    tagData["EPC"] = model.EPC;
                     tagData["TagType"] = model.TagType;
                     router.push({ name: model.TagType });
-                  } else {
-                    alart("Please select your tag type");
+                  } else if (model.TagType === 'Notification'){
+                    router.push({ name: 'Notification'})
                   }
                 }
               }

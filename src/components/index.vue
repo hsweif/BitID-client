@@ -53,6 +53,7 @@
           </draggable>
           <FormItem>
             <Button type="primary" @click="handleSubmit()">Submit</Button>
+            <Button type="ghost" @click="handleAdd()" style="margin-left: 8px">Add</Button>
             <Button type="ghost" @click="handleReset()" style="margin-left: 8px">Reset</Button>
           </FormItem>
         </Form>
@@ -129,7 +130,7 @@ export default {
         },
         {
           id: 4,
-          label: "tag's state",
+          label: "tag state",
           type: "radio",
           parent_name: null
         },
@@ -172,6 +173,16 @@ export default {
     handleReset() {
       this.sortable_item = [];
     },
+    handleAdd() {
+      let correlateCase = {
+        State: this.formData['tag state'] == 0 ? 'OFF' : 'ON',
+        RelatedObj: this.formData['object'],
+        RelatedObjState: this.formData['related state'] == 0 ? 'OFF' : 'ON',
+        Behavior: this.formData['semantic meaning']
+      };
+      tagData["Semantic"].push(correlateCase);
+      alert(JSON.stringify(tagData))
+    },
     // modal内数据字典选项发生改变触发事件
     handleDataDictChange(val) {
       // 选中后，val默认赋值到modalFormData.dict
@@ -180,7 +191,7 @@ export default {
       this.$set(this.modalFormData, "loading", true);
       if (obj.id == LABEL.OBJ_LIST) {
         let xhr = new XMLHttpRequest();
-        xhr.open("GET", serverHost + "/get-objects", true);
+        xhr.open("GET", serverHost + "/get-complex-objects", true);
         let vm = this;
         xhr.onreadystatechange = function() {
           if (xhr.readyState == 4) {

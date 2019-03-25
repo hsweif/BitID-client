@@ -1,5 +1,5 @@
 export let tagData = {
-  RFID: '',
+  EPC: '',
   TagType: '',
   Semantic: []
 }
@@ -16,7 +16,7 @@ export function changeEpc () {
 
 export function reset(){
   tagData = {
-    RFID: '',
+    EPC: '',
     TagType: '',
     Semantic: []
   }

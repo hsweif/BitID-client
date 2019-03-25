@@ -16,12 +16,12 @@ export default new Router({
     {
       path: '/',
       name: 'Form',
-      component: index 
+      component: Form 
     },
     {
       path: 'Interaction',
       name: 'Interaction',
-      component: Interaction
+      component: index 
     },
     {
       path: 'Sensor',
@@ -32,6 +32,11 @@ export default new Router({
       path: 'render',
       name: 'render',
       component: render
+    },
+    {
+      path: 'notification',
+      name: 'Notification',
+      component: Notification
     }
   ]
 })

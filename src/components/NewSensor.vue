@@ -10,16 +10,12 @@
       <objList @selectList="getSelected"></objList>
   </tr>
     <tr>
-    <span>2. Define the state</span>
-      <select v-model="state">
-        <option disabled value>Unselected</option>
-        <option>ON</option>
-        <option>OFF</option>
-      </select>
+      <span>When it is detected, its semantic meaning is:</span>
+      <input v-model="on_semantic">
     </tr>
     <tr>
-      <span>3. Define the semantic meaning.</span>
-      <input v-model="semantic">
+      <span>When it is undetected, its semantic meaning is:</span>
+      <input v-model="off_semantic">
     </tr>
     <tr>
       <button v-on:click="Submit">Submit</button>
@@ -48,8 +44,8 @@ export default Vue.extend({
     Submit: function() {
       let result = {
         RelatedObject: this.objectName,
-        State: this.state,
-        Behavior: this.semantic
+        ON: this.on_semantic,
+        OFF: this.off_semantic,
       };
       let deepCopyModel = JSON.parse(JSON.stringify(result));
       tagData["Semantic"].push(deepCopyModel);
