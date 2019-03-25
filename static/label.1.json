@@ -5,6 +5,6 @@
     }],
     "status": "success",
     "code": 200,
-    "name": "Object",
+    "name": "object",
     "placeholder": "Please manually input the object name."
 }

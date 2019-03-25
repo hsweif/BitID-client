@@ -183,6 +183,7 @@ export default {
       let tgState = '';
       let rObj = '';
       let bv = '';
+      alert(JSON.stringify(this.formData))
       if(this.formData['related state'] !== undefined) {
         rObjState = this.formData['related state'] == 0 ? 'OFF' : 'ON';
       }
@@ -192,6 +193,9 @@ export default {
       if(this.formData['object'] !== undefined) {
         if(this.$data.objList[this.formData['object']] !== undefined) {
           rObj = this.$data.objList[this.formData['object']]['label_name'];
+        }
+        else{
+          rObj = this.formData['object']
         }
       }
       if(this.formData['semantic meaning'] !== undefined) {

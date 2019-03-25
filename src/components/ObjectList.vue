@@ -37,6 +37,9 @@ export default Vue.extend({
     listChange: function(){
       this.$emit('selectList', this.selected);
     }
+  },
+  created(){
+    this.Refresh();
   }
 });
 </script>
