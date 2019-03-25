@@ -25,7 +25,7 @@
 
 <script lang="ts">
 import Vue from "vue";
-import { tagData, saveAPI, serverHost, reset } from "../global";
+import { tagData, serverHost, reset, CONFIG } from "../global";
 import router from "../router/index";
 import ObjectList from "./ObjectList.vue";
 Vue.component("objList", ObjectList);
@@ -52,7 +52,7 @@ export default Vue.extend({
       let xhr = new XMLHttpRequest();
       let form = new FormData();
       form.append("content", JSON.stringify(tagData));
-      xhr.open("POST", saveAPI, true);
+      xhr.open("POST", CONFIG.saveAPI, true);
       xhr.onreadystatechange = function() {
         if (xhr.readyState == 4) {
           alert("successfully submitted");

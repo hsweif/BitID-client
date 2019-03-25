@@ -9,7 +9,7 @@ import Vue from "vue";
 import VueFormGenerator from "vue-form-generator";
 import "vue-form-generator/dist/vfg.css";
 import router from "../router/index";
-import {tagData, saveAPI} from "../global";
+import {tagData, CONFIG} from "../global";
 Vue.use(VueFormGenerator);
 
 export default {
@@ -112,7 +112,7 @@ export default {
                   let xhr = new XMLHttpRequest();
                   let form = new FormData();
                   form.append("content", JSON.stringify(tagData));
-                  xhr.open("POST", saveAPI, true);
+                  xhr.open("POST", CONFIG.saveAPI, true);
                   xhr.send(form);
                   xhr.onload = function(e) {
                     alert(this.responseText);

@@ -96,7 +96,7 @@
 <script>
 import draggable from "vuedraggable";
 import form_list from "./custom_form/FormList";
-import { tagData, epcAPI, epcList, changeEpc, serverHost, LABEL } from "../global";
+import { tagData, epcAPI, epcList, changeEpc, serverHost, LABEL, CONFIG } from "../global";
 export default {
   components: {
     draggable
@@ -152,16 +152,20 @@ export default {
   methods: {
     // 克隆表单提交事件
     handleSubmit() {
-      localStorage.setItem(
-        "template_form",
-        JSON.stringify(
-          this.sortable_item.filter(v => {
-            return !!v.obj.name;
-          })
-        )
-      );
-      this.formData['object'] = this.objList[this.formData['object']]['label_name']
-      alert(JSON.stringify(this.formData));
+      let xhr = new XMLHttpRequest();
+      let form = new FormData();
+      form.append("content", JSON.stringify(tagData));
+      xhr.open("POST", CONFIG.saveAPI, true);
+      xhr.onreadystatechange = function() {
+        if (xhr.readyState == 4) {
+          alert("successfully submitted");
+          reset();
+          router.replace({ name: "Form" });
+        }
+      };
+      xhr.send(form);
+      // this.formData['object'] = this.objList[this.formData['object']]['label_name']
+      alert(JSON.stringify(tagData));
       // this.$router.push("/render");
     },
     processSortableItem() {
@@ -172,16 +176,34 @@ export default {
     // 清空克隆表单
     handleReset() {
       this.sortable_item = [];
+      tagData["Semantic"] = [];
     },
     handleAdd() {
+      let rObjState = '';
+      let tgState = '';
+      let rObj = '';
+      let bv = '';
+      if(this.formData['related state'] !== undefined) {
+        rObjState = this.formData['related state'] == 0 ? 'OFF' : 'ON';
+      }
+      if(this.formData['tag state'] !== undefined) {
+        tgState = this.formData['tag state'] == 0 ? 'OFF' : 'ON';
+      }
+      if(this.formData['object'] !== undefined) {
+        if(this.$data.objList[this.formData['object']] !== undefined) {
+          rObj = this.$data.objList[this.formData['object']]['label_name'];
+        }
+      }
+      if(this.formData['semantic meaning'] !== undefined) {
+        bv = this.formData['semantic meaning'];
+      }
       let correlateCase = {
-        State: this.formData['tag state'] == 0 ? 'OFF' : 'ON',
-        RelatedObj: this.formData['object'],
-        RelatedObjState: this.formData['related state'] == 0 ? 'OFF' : 'ON',
-        Behavior: this.formData['semantic meaning']
+        State: tgState,
+        RelatedObject: rObj,
+        RelatedObjState: rObjState,
+        Behavior: bv 
       };
       tagData["Semantic"].push(correlateCase);
-      alert(JSON.stringify(tagData))
     },
     // modal内数据字典选项发生改变触发事件
     handleDataDictChange(val) {

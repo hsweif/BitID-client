@@ -44,13 +44,13 @@
 
 <script lang="ts">
 import Vue from "vue";
-import { tagData, saveAPI, serverHost, reset } from "../global";
+import { tagData, serverHost, reset, CONFIG } from "../global";
 import router from "../router/index";
 export default Vue.extend({
   data() {
     return {
       semControl: "",
-      relatedObj: "",
+      RelatedObject: "",
       relatedState: "",
       self_state: "",
       sem_comb: ""
@@ -60,7 +60,7 @@ export default Vue.extend({
     Add: function() {
       let correlateCase = {
         State: this.self_state,
-        RelatedObj: this.relatedObj,
+        RelatedObject: this.RelatedObject,
         RelatedObjState: this.relatedState,
         Behavior: this.sem_comb
       };
@@ -71,7 +71,7 @@ export default Vue.extend({
       let xhr = new XMLHttpRequest();
       let form = new FormData();
       form.append("content", JSON.stringify(tagData));
-      xhr.open("POST", saveAPI, true);
+      xhr.open("POST", CONFIG.saveAPI, true);
       xhr.onreadystatechange = function() {
         if (xhr.readyState == 4) {
           alert("successfully submitted");
@@ -82,7 +82,7 @@ export default Vue.extend({
       xhr.send(form);
     },
     getSelected: function(msg) {
-      this.relatedObj = msg;
+      this.RelatedObject = msg;
     }
   }
 });

@@ -4,7 +4,6 @@ export let tagData = {
   Semantic: []
 }
 
-export const saveAPI = 'http://localhost:8888/save-tag'
 export const epcAPI = 'http://localhost:8888/update-epc'
 export const serverHost = 'http://localhost:8888'
 export let epcList = [1,3,4]
@@ -24,4 +23,9 @@ export function reset(){
 
 export const LABEL = {
   OBJ_LIST: 8
+}
+
+export const CONFIG = {
+  UPDATE_INTERVAL: 3000,
+  saveAPI: 'http://localhost:8888/save-tag'
 }
