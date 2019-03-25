@@ -59,14 +59,14 @@
       </i-col>
       <Modal
         v-model="showModal"
-        :title="'配置' + modalFormData.modalTitle + '属性'"
+        :title="'Settings'"
         :mask-closable="false"
       >
         <Form class="form_content" :label-width="80" :model="modalFormData" ref="modalFormData">
-          <FormItem label="控件名称：" v-if="typeof modalFormData.label != 'undefined'">
-            <i-input v-model="modalFormData.label" placeholder="请输入控件名称" :maxlength="4"></i-input>
+          <FormItem label="Component" v-if="typeof modalFormData.label != 'undefined'">
+            <i-input v-model="modalFormData.label" placeholder="Please input the component name" :maxlength="4"></i-input>
           </FormItem>
-          <FormItem label="数据字典：" v-if="showModal">
+          <FormItem label="Data type" v-if="showModal">
             <Select v-model="modalFormData.dict" filterable @on-change="handleDataDictChange">
               <!-- value绑定json字符串的原因是，需要用到parent_name，当handleDataDictChange触发，赋值到modalFormData -->
               <Option
@@ -78,113 +78,13 @@
               >{{ item.label }}</Option>
             </Select>
           </FormItem>
-          <FormItem label="name属性：" v-if="typeof modalFormData.name != 'undefined'">
-            <i-input v-model="modalFormData.name" placeholder disabled></i-input>
-          </FormItem>
-          <FormItem label="关联数据：" v-if="typeof modalFormData.relation != 'undefined'">
-            <!-- 当绑定name并且当前relationList存在数据时候才可以关联字段 -->
-            <Checkbox
-              :disabled="!modalFormData.name || !relationList.length"
-              v-model="modalFormData.relation"
-            >是否关联字段</Checkbox>
-          </FormItem>
-          <FormItem
-            label="关联配置："
-            v-if="typeof modalFormData.relation != 'undefined' && modalFormData.relation"
-          >
-            <Select
-              v-model="modalFormData.relation_name"
-              class="inline-block"
-              style="width: 150px"
-              @on-change="_=>modalFormData.relation_value = ''"
-            >
-              <Option
-                :disabled="item.obj.name == modalFormData.name"
-                v-for="(item,index) in relationList"
-                :key="index"
-                :value="item.obj.name"
-              >{{item.obj.label}}</Option>
-            </Select>
-            <p class="inline-block padder-sm">等于</p>
-            <Select
-              v-model="modalFormData.relation_value"
-              class="inline-block"
-              style="width: 150px"
-            >
-              <Option
-                v-for="(item,index) in relationValue"
-                :key="index"
-                :value="item.label_value"
-              >{{item.label_name}}</Option>
-            </Select>
-          </FormItem>
           <FormItem label="placeholder：" v-if="typeof modalFormData.placeholder != 'undefined'">
-            <i-input v-model="modalFormData.placeholder" placeholder="请输入placeholder"></i-input>
-          </FormItem>
-          <FormItem label="最大长度：" v-if="typeof modalFormData.maxLength != 'undefined'">
-            <InputNumber v-model="modalFormData.maxLength" placeholder="请输入文本限制最大长度"></InputNumber>
-          </FormItem>
-          <FormItem label="最大限制：" v-if="typeof modalFormData.maxSize != 'undefined'">
-            <InputNumber
-              :formatter="value => `${value}kb`"
-              :parser="value => value.replace('kb', '')"
-              v-model="modalFormData.maxSize"
-              placeholder="请输入上传文件最大限制"
-            ></InputNumber>
-          </FormItem>
-          <FormItem label="上边距：" v-if="typeof modalFormData.marginTop != 'undefined'">
-            <InputNumber
-              :formatter="value => `${value}px`"
-              :parser="value => value.replace('px', '')"
-              v-model="modalFormData.marginTop"
-              placeholder="请输入标签上边距"
-            ></InputNumber>
-          </FormItem>
-          <FormItem label="下边距：" v-if="typeof modalFormData.marginBottom != 'undefined'">
-            <InputNumber
-              :formatter="value => `${value}px`"
-              :parser="value => value.replace('px', '')"
-              v-model="modalFormData.marginBottom"
-              placeholder="请输入标签下边距"
-            ></InputNumber>
-          </FormItem>
-          <FormItem label="详细地址：" v-if="typeof modalFormData.details_address != 'undefined'">
-            <Checkbox v-model="modalFormData.details_address">是否需要详细地址</Checkbox>
-          </FormItem>
-          <FormItem label="是否必填：" v-if="typeof modalFormData.require != 'undefined'">
-            <Checkbox v-model="modalFormData.require">必填</Checkbox>
-          </FormItem>
-          <FormItem label="校验错误：" v-if="typeof modalFormData.ruleError != 'undefined'">
-            <i-input v-model="modalFormData.ruleError" placeholder="请输入校验错误提示"></i-input>
-          </FormItem>
-          <FormItem
-            label="是否多选："
-            v-if="typeof modalFormData.multiple != 'undefined' && modalFormData.type != 'address'"
-          >
-            <Checkbox v-model="modalFormData.multiple">多选</Checkbox>
-          </FormItem>
-          <FormItem label="时间格式：" v-if="typeof modalFormData.format != 'undefined'">
-            <RadioGroup v-model="modalFormData.format">
-              <Radio label="yyyy年MM月dd日"></Radio>
-              <Radio label="yyyy-MM-dd HH:mm"></Radio>
-            </RadioGroup>
-          </FormItem>
-          <FormItem label="行内元素：" v-if="typeof modalFormData.inlineBlock != 'undefined'">
-            <Checkbox v-model="modalFormData.inlineBlock">是</Checkbox>
-          </FormItem>
-          <FormItem label="显示行数：" v-if="typeof modalFormData.maxRows != 'undefined'">
-            <Slider v-model="modalFormData.maxRows" :min="2" :max="10"></Slider>
-          </FormItem>
-          <FormItem label="标题大小：" v-if="typeof modalFormData.level != 'undefined'">
-            <InputNumber :max="6" :min="1" v-model="modalFormData.level"></InputNumber>
-          </FormItem>
-          <FormItem label="字体颜色：" v-if="typeof modalFormData.color != 'undefined'">
-            <ColorPicker v-model="modalFormData.color"/>
+            <i-input v-model="modalFormData.placeholder" placeholder=""></i-input>
           </FormItem>
         </Form>
         <div slot="footer">
-          <Button type="text" @click="handleCancel">取消</Button>
-          <Button type="primary" :loading="modalFormData.loading" @click="handleOk">确定</Button>
+          <Button type="text" @click="handleCancel">Cancel</Button>
+          <Button type="primary" :loading="modalFormData.loading" @click="handleOk">Confirm</Button>
         </div>
       </Modal>
     </i-row>
@@ -195,7 +95,7 @@
 <script>
 import draggable from "vuedraggable";
 import form_list from "./custom_form/FormList";
-import { tagData, epcAPI, epcList, changeEpc, serverHost } from "../global";
+import { tagData, epcAPI, epcList, changeEpc, serverHost, LABEL } from "../global";
 export default {
   components: {
     draggable
@@ -204,6 +104,7 @@ export default {
     return {
       form_list: form_list,
       sortable_item: [],
+      objList: [],
       showModal: false,
       // 深拷贝对象，防止默认空对象被更改
       // 颜色选择器bug，对象下color不更新
@@ -215,19 +116,26 @@ export default {
       dataDict: [
         {
           id: 1,
-          label: "姓名",
+          label: "object",
           type: "input",
+          placeholder: "input the object name",
           parent_name: null
         },
         {
           id: 3,
-          label: "电话",
+          label: "semantic meaning",
           type: "input",
           parent_name: null
         },
         {
+          id: 4,
+          label: "tag's state",
+          type: "radio",
+          parent_name: null
+        },
+        {
           id: 5,
-          label: "State",
+          label: "related state",
           type: "radio",
           parent_name: null
         },
@@ -235,24 +143,6 @@ export default {
           id: 8,
           label: "Objects",
           type: "select",
-          parent_name: null
-        },
-        {
-          id: 14,
-          label: "案件资料是否收齐",
-          type: "select",
-          parent_name: null
-        },
-        {
-          id: 17,
-          label: "标识缺少的资料",
-          type: "text",
-          parent_name: "is_case"
-        },
-        {
-          id: 19,
-          label: "地址",
-          type: "address",
           parent_name: null
         }
       ]
@@ -269,6 +159,7 @@ export default {
           })
         )
       );
+      this.formData['object'] = this.objList[this.formData['object']]['label_name']
       alert(JSON.stringify(this.formData));
       // this.$router.push("/render");
     },
@@ -287,19 +178,20 @@ export default {
       const obj = JSON.parse(val);
       // 数据加载中，禁止modal_submit提交按钮
       this.$set(this.modalFormData, "loading", true);
-      if (obj.id == 8) {
+      if (obj.id == LABEL.OBJ_LIST) {
         let xhr = new XMLHttpRequest();
         xhr.open("GET", serverHost + "/get-objects", true);
         let vm = this;
         xhr.onreadystatechange = function() {
           if (xhr.readyState == 4) {
             let response = JSON.parse(xhr.responseText);
-            let objList = response["objects"];
-            alert(objList)
+            vm.objList = response["objects"];
             vm.modalFormData = Object.assign({}, vm.modalFormData, {
               name: 'object',
               loading: false,
-              items: objList,
+              items: vm.objList,
+              placeholder: 'Please select the object from the list',
+              label: 'object',
               parent_name: null
             }); 
           }
@@ -311,9 +203,10 @@ export default {
             name: d.data.name,
             loading: false,
             items: d.data.items,
+            placeholder: d.data.placeholder,
+            label: d.data.name,
             parent_name: obj.parent_name
           });
-          alert(JSON.stringify(d.data.items))
         });
       }
     },

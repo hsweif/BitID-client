@@ -2,7 +2,7 @@ export default (_self, h) => {
   return [
     h("Input", {
       props: {
-        placeholder: _self.obj.placeholder || "这是一个输入框",
+        placeholder: _self.obj.placeholder || 'Input EPC or semantic meaning',
         maxlength: parseInt(_self.obj.maxLength) || 20,
         value: _self.obj.value || ""
       },
@@ -26,14 +26,14 @@ export let inputConf = {
   // 是否可配置
   config: true,
   // 控件左侧label内容
-  label: '输入框',
+  label: 'Input',
   placeholder: '',
   // 是否显示行内元素
   inlineBlock: false,
   // 是否必填
   require: true,
   // 最大长度
-  maxLength: 20,
+  maxLength: 50,
   // 选项内数据
   items: [{ "label_value": null, "label_name": "" }],
   value: '',

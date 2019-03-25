@@ -14,8 +14,6 @@ const formList = {
   input: inputConf,
   select: selectConf,
   radio: radioConf,
-  checkbox: checkBoxConf,
-  text: textConf
 };
 let list_arr = [];
 for (let i in formList) {

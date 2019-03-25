@@ -16,7 +16,7 @@ export let titleConf = {
   // 是否可配置
   config: true,
   // 控件文本显示内容
-  label: '标题',
+  label: 'Interaction tag',
   // h标签等级（1-6）
   level: 3,
   hasLine: true,

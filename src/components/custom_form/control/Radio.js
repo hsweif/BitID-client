@@ -39,7 +39,7 @@ export let radioConf = {
   // 绑定的值
   value: '',
   // 选项内数据
-  items: [{ "label_value": "1", "label_name": "Detected" }, { "label_value": "2", "label_name": "Undetected" }],
+  items: [{ "label_value": "1", "label_name": "Detected" }, { "label_value": "0", "label_name": "Undetected" }],
   // 表单name
   name: '',
   // 验证错误提示信息

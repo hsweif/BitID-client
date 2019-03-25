@@ -21,3 +21,7 @@ export function reset(){
     Semantic: []
   }
 }
+
+export const LABEL = {
+  OBJ_LIST: 8
+}

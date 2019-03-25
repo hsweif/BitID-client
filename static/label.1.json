@@ -1,1 +1,10 @@
-{"items":[{"label_value":null,"label_name":""}],"status":"success","code":200,"name":"name"}
+{
+    "items": [{
+        "label_value": null,
+        "label_name": ""
+    }],
+    "status": "success",
+    "code": 200,
+    "name": "Object",
+    "placeholder": "Please manually input the object name."
+}
