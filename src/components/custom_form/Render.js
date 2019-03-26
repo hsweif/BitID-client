@@ -11,6 +11,7 @@ import p from './control/P';
 import uploads from './control/Uploads';
 import datepicker from './control/DatePicker';
 import address from './control/Address';
+import toggle from './control/Toggle'
 
 import trigger from './config/trigger';
 
@@ -26,12 +27,12 @@ const form_item = {
   cascader,
   address,
   uploads,
-  text,
+  toggle
 };
 
 const displayControl = (_self, sortableItem, name, value) => {
   // 默认不显示
-  let display = false;
+  let display = true;
   for (let i in sortableItem) {
     // 循环出sortableItem内被关联字段并且其状态为显示并且其值与用户预设被关联字段值匹配
     // 不匹配,进行下一次判断

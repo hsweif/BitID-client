@@ -23,12 +23,6 @@
             "label": "related state",
             "type": "radio",
             "parent_name": null
-        },
-        {
-            "id": 8,
-            "label": "Objects",
-            "type": "select",
-            "parent_name": null
         }
     ],
     "status": "success",

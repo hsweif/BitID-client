@@ -26,9 +26,6 @@ export default (_self, h) => {
       },
       on: {
         "on-change" (arr) {
-          if (!_self.obj.name) {
-            return false;
-          }
           _self.obj.value = arr;
           _self.$emit('handleChangeVal', arr)
         }

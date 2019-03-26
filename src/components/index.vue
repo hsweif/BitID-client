@@ -130,12 +130,16 @@ export default {
     handleSubmit() {
       let xhr = new XMLHttpRequest();
       let form = new FormData();
+      let vm = this;
       form.append("content", JSON.stringify(tagData));
       xhr.open("POST", CONFIG.saveAPI, true);
       xhr.onreadystatechange = function() {
         if (xhr.readyState == 4) {
-          alert("successfully submitted");
+          if(CONFIG.DEBUG) {
+            alert("successfully submitted");
+          }
           reset();
+          vm.sortable_item = []
           router.replace({ name: "Form" });
         }
       };
@@ -159,7 +163,10 @@ export default {
       let tgState = "";
       let rObj = "";
       let bv = "";
+      if(util.DEBUG) {
       alert(JSON.stringify(this.formData));
+
+      }
       if (this.formData["related state"] !== undefined) {
         rObjState = this.formData["related state"] == 0 ? "OFF" : "ON";
       }
@@ -188,13 +195,13 @@ export default {
     handleDataDictChange(val) {
       // 选中后，val默认赋值到modalFormData.dict
       const obj = JSON.parse(val);
-      alert(JSON.stringify(obj))
+      // alert(JSON.stringify(obj))
       // 数据加载中，禁止modal_submit提交按钮
       this.$set(this.modalFormData, "loading", true);
+      let xhr = new XMLHttpRequest();
+      let vm = this;
       if (obj.id == LABEL.OBJ_LIST) {
-        let xhr = new XMLHttpRequest();
         xhr.open("GET", serverHost + "/get-complex-objects", true);
-        let vm = this;
         xhr.onreadystatechange = function() {
           if (xhr.readyState == 4) {
             let response = JSON.parse(xhr.responseText);
@@ -210,12 +217,30 @@ export default {
           }
         };
         xhr.send(null);
-      } else if (obj.id >= CONFIG.OBJ_BOUND) {
-        // TODO: Support renew
-        let xhr = new XMLHttpRequest();
+      } else if(obj.id >= CONFIG.TOGGLE_BOUND) {
+        // TODO: Support toggle
+        let form = new FormData();
+        form.append("toggle", obj.parent_name);
+        xhr.open("POST", CONFIG.GET_TOGGLE_ACTION, true);
+        xhr.onreadystatechange = function(){
+          if(xhr.readyState == 4) {
+            let response = JSON.parse(xhr.responseText);
+            let actList = response["action"];
+            vm.modalFormData = Object.assign({}, vm.modalFormData, {
+              name: obj.parent_name,
+              loading: false,
+              items: actList,
+              placeholder: "Please select what the toggle control in the list",
+              label: obj.parent_name,
+              parent_name: null
+            });
+          }
+        }
+        xhr.send(form);
+      }
+      else if (obj.id >= CONFIG.OBJ_BOUND) {
         let form = new FormData();
         form.append("objName", obj.parent_name);
-        let vm = this;
         xhr.open("POST", CONFIG.SEM_POST, true);
         xhr.onreadystatechange = function() {
           if (xhr.readyState == 4) {
@@ -410,10 +435,28 @@ export default {
         }
       };
       xhr.send(null);
+      // TODO: Toggle implement
+      let toggleXHR = new XMLHttpRequest();
+      toggleXHR.open("GET", CONFIG.GET_TOGGLE, true);
+      toggleXHR.onreadystatechange = function() {
+        if(toggleXHR.readyState == 4) {
+          let response = JSON.parse(toggleXHR.responseText);
+          let toggleList = response['toggle'];
+          let cnt = 0;
+          for(let t in toggleList) {
+            vm.dataDict.push({
+              id: CONFIG.TOGGLE_BOUND + cnt,
+              type: "toggle",
+              label: toggleList[t],
+              parent_name: toggleList[t] 
+            })
+            cnt ++;
+          }
+        }
+      };
+      toggleXHR.send(null);
     });
-    this.sortable_item = JSON.parse(
-      localStorage.getItem("template_form") || "[]"
-    );
+    this.sortable_item = [];
   }
 };
 </script>
