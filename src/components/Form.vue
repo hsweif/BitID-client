@@ -51,13 +51,14 @@ export default {
                     onclick: function(model) {
                       let xhr = new XMLHttpRequest();
                       let vm = this;
+                      let v = model;
                       setInterval(() =>{
                         xhr.open("GET", epcAPI, true);
                         xhr.timeout = 3000;
                         xhr.onreadystatechange = function() {
                           if (xhr.readyState == 4) {
                             if(xhr.responseText != 'None') {
-                              model.EPC = xhr.responseText;
+                              v.EPC = xhr.responseText;
                             }
                           }
                         };

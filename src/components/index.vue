@@ -58,14 +58,14 @@
           </FormItem>
         </Form>
       </i-col>
-      <Modal
-        v-model="showModal"
-        :title="'Settings'"
-        :mask-closable="false"
-      >
+      <Modal v-model="showModal" :title="'Settings'" :mask-closable="false">
         <Form class="form_content" :label-width="80" :model="modalFormData" ref="modalFormData">
           <FormItem label="Component" v-if="typeof modalFormData.label != 'undefined'">
-            <i-input v-model="modalFormData.label" placeholder="Please input the component name" :maxlength="4"></i-input>
+            <i-input
+              v-model="modalFormData.label"
+              placeholder="Please input the component name"
+              :maxlength="4"
+            ></i-input>
           </FormItem>
           <FormItem label="Data type" v-if="showModal">
             <Select v-model="modalFormData.dict" filterable @on-change="handleDataDictChange">
@@ -80,7 +80,7 @@
             </Select>
           </FormItem>
           <FormItem label="placeholder：" v-if="typeof modalFormData.placeholder != 'undefined'">
-            <i-input v-model="modalFormData.placeholder" placeholder=""></i-input>
+            <i-input v-model="modalFormData.placeholder" placeholder></i-input>
           </FormItem>
         </Form>
         <div slot="footer">
@@ -96,7 +96,15 @@
 <script>
 import draggable from "vuedraggable";
 import form_list from "./custom_form/FormList";
-import { tagData, epcAPI, epcList, changeEpc, serverHost, LABEL, CONFIG } from "../global";
+import {
+  tagData,
+  epcAPI,
+  epcList,
+  changeEpc,
+  serverHost,
+  LABEL,
+  CONFIG
+} from "../global";
 export default {
   components: {
     draggable
@@ -114,39 +122,7 @@ export default {
         loading: false
       },
       formData: {},
-      dataDict: [
-        {
-          id: 1,
-          label: "object",
-          type: "input",
-          placeholder: "input the object name",
-          parent_name: null
-        },
-        {
-          id: 3,
-          label: "semantic meaning",
-          type: "input",
-          parent_name: null
-        },
-        {
-          id: 4,
-          label: "tag state",
-          type: "radio",
-          parent_name: null
-        },
-        {
-          id: 5,
-          label: "related state",
-          type: "radio",
-          parent_name: null
-        },
-        {
-          id: 8,
-          label: "Objects",
-          type: "select",
-          parent_name: null
-        }
-      ]
+      dataDict: []
     };
   },
   methods: {
@@ -179,33 +155,32 @@ export default {
       tagData["Semantic"] = [];
     },
     handleAdd() {
-      let rObjState = '';
-      let tgState = '';
-      let rObj = '';
-      let bv = '';
-      alert(JSON.stringify(this.formData))
-      if(this.formData['related state'] !== undefined) {
-        rObjState = this.formData['related state'] == 0 ? 'OFF' : 'ON';
+      let rObjState = "";
+      let tgState = "";
+      let rObj = "";
+      let bv = "";
+      alert(JSON.stringify(this.formData));
+      if (this.formData["related state"] !== undefined) {
+        rObjState = this.formData["related state"] == 0 ? "OFF" : "ON";
       }
-      if(this.formData['tag state'] !== undefined) {
-        tgState = this.formData['tag state'] == 0 ? 'OFF' : 'ON';
+      if (this.formData["tag state"] !== undefined) {
+        tgState = this.formData["tag state"] == 0 ? "OFF" : "ON";
       }
-      if(this.formData['object'] !== undefined) {
-        if(this.$data.objList[this.formData['object']] !== undefined) {
-          rObj = this.$data.objList[this.formData['object']]['label_name'];
+      if (this.formData["object"] !== undefined) {
+        if (this.$data.objList[this.formData["object"]] !== undefined) {
+          rObj = this.$data.objList[this.formData["object"]]["label_name"];
+        } else {
+          rObj = this.formData["object"];
         }
-        else{
-          rObj = this.formData['object']
-        }
       }
-      if(this.formData['semantic meaning'] !== undefined) {
-        bv = this.formData['semantic meaning'];
+      if (this.formData["semantic meaning"] !== undefined) {
+        bv = this.formData["semantic meaning"];
       }
       let correlateCase = {
         State: tgState,
         RelatedObject: rObj,
         RelatedObjState: rObjState,
-        Behavior: bv 
+        Behavior: bv
       };
       tagData["Semantic"].push(correlateCase);
     },
@@ -224,17 +199,21 @@ export default {
             let response = JSON.parse(xhr.responseText);
             vm.objList = response["objects"];
             vm.modalFormData = Object.assign({}, vm.modalFormData, {
-              name: 'object',
+              name: "object",
               loading: false,
               items: vm.objList,
-              placeholder: 'Please select the object from the list',
-              label: 'object',
+              placeholder: "Please select the object from the list",
+              label: "object",
               parent_name: null
-            }); 
+            });
           }
         };
         xhr.send(null);
-      } else {
+      }
+      else if(obj.id >= CONFIG.OBJ_BOUND) {
+        // TODO: Support renew
+      }
+      else {
         this.$http.get(`/static/label.${obj.id}.json`).then(d => {
           this.modalFormData = Object.assign({}, this.modalFormData, {
             name: d.data.name,
@@ -387,8 +366,27 @@ export default {
   },
   created() {
     // /static/label.json
-    this.http.get("/static/label.json").then(d => {
-      this.dataDict = d.data.items;
+    this.$http.get("/static/label.json").then(d => {
+      this.dataDict = d.data.items; 
+      let xhr = new XMLHttpRequest();
+      xhr.open("GET", CONFIG.GET_OBJ, true);
+      let vm = this;
+      xhr.onreadystatechange = function() {
+        if (xhr.readyState == 4) {
+          let response = JSON.parse(xhr.responseText);
+          let objList = response["objects"];
+          let cnt = 0 
+          for(let o in objList) {
+            vm.dataDict.push({
+              id: CONFIG.OBJ_BOUND+cnt,
+              type: "select",
+              label: objList[o],
+              parent_name: null
+            });
+          }
+        }
+      };
+      xhr.send(null);
     });
     this.sortable_item = JSON.parse(
       localStorage.getItem("template_form") || "[]"
