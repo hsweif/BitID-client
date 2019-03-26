@@ -11,7 +11,7 @@ import Vue from "vue";
 import VueFormGenerator from "vue-form-generator";
 import "vue-form-generator/dist/vfg.css";
 import router from "../router/index";
-import { tagData, epcAPI, epcList, changeEpc } from "../global";
+import { tagData, epcAPI, epcList, changeEpc, CONFIG } from "../global";
 
 Vue.use(VueFormGenerator);
 
@@ -51,20 +51,18 @@ export default {
                     onclick: function(model) {
                       let xhr = new XMLHttpRequest();
                       let vm = this;
-                      xhr.open("GET", epcAPI, true);
-                      xhr.timeout = 3000;
-                      xhr.onreadystatechange = function() {
-                        if (xhr.readyState == 4) {
-                          if(xhr.responseText != 'None') {
-                            alert("Succesfully detected.");
-                            model.EPC = xhr.responseText;
+                      setInterval(() =>{
+                        xhr.open("GET", epcAPI, true);
+                        xhr.timeout = 3000;
+                        xhr.onreadystatechange = function() {
+                          if (xhr.readyState == 4) {
+                            if(xhr.responseText != 'None') {
+                              model.EPC = xhr.responseText;
+                            }
                           }
-                          else{
-                            alert("Fail");
-                          }
-                        }
-                      };
-                      xhr.send(null);
+                        };
+                        xhr.send(null);
+                      }, CONFIG.UPDATE_INTERVAL)
                     }
                   }
                 ]
