@@ -188,6 +188,7 @@ export default {
     handleDataDictChange(val) {
       // 选中后，val默认赋值到modalFormData.dict
       const obj = JSON.parse(val);
+      alert(JSON.stringify(obj))
       // 数据加载中，禁止modal_submit提交按钮
       this.$set(this.modalFormData, "loading", true);
       if (obj.id == LABEL.OBJ_LIST) {
@@ -209,11 +210,32 @@ export default {
           }
         };
         xhr.send(null);
-      }
-      else if(obj.id >= CONFIG.OBJ_BOUND) {
+      } else if (obj.id >= CONFIG.OBJ_BOUND) {
         // TODO: Support renew
-      }
-      else {
+        let xhr = new XMLHttpRequest();
+        let form = new FormData();
+        form.append("objName", obj.parent_name);
+        let vm = this;
+        xhr.open("POST", CONFIG.SEM_POST, true);
+        xhr.onreadystatechange = function() {
+          if (xhr.readyState == 4) {
+            let response = JSON.parse(xhr.responseText);
+            let semList = response["semantic"];
+            if(CONFIG.DEBUG) {
+              alert(JSON.stringify(semList))
+            }
+            vm.modalFormData = Object.assign({}, vm.modalFormData, {
+              name: obj.parent_name,
+              loading: false,
+              items: semList,
+              placeholder: "Please select the sensor state from the list",
+              label: obj.parent_name,
+              parent_name: null
+            });
+          }
+        };
+        xhr.send(form);
+      } else {
         this.$http.get(`/static/label.${obj.id}.json`).then(d => {
           this.modalFormData = Object.assign({}, this.modalFormData, {
             name: d.data.name,
@@ -367,7 +389,7 @@ export default {
   created() {
     // /static/label.json
     this.$http.get("/static/label.json").then(d => {
-      this.dataDict = d.data.items; 
+      this.dataDict = d.data.items;
       let xhr = new XMLHttpRequest();
       xhr.open("GET", CONFIG.GET_OBJ, true);
       let vm = this;
@@ -375,14 +397,15 @@ export default {
         if (xhr.readyState == 4) {
           let response = JSON.parse(xhr.responseText);
           let objList = response["objects"];
-          let cnt = 0 
-          for(let o in objList) {
+          let cnt = 0;
+          for (let o in objList) {
             vm.dataDict.push({
-              id: CONFIG.OBJ_BOUND+cnt,
+              id: CONFIG.OBJ_BOUND + cnt,
               type: "select",
               label: objList[o],
-              parent_name: null
+              parent_name: objList[o] 
             });
+            cnt ++;
           }
         }
       };

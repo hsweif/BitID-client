@@ -29,6 +29,7 @@ export const CONFIG = {
   UPDATE_INTERVAL: 3000,
   saveAPI: 'http://localhost:8888/save-tag',
   GET_OBJ: serverHost + '/get-objects',
+  SEM_POST: serverHost + '/get-object-sem',
   OBJ_LIST: 8,
   DEBUG: true,
   OBJ_BOUND: 100
