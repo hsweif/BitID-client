@@ -105,7 +105,7 @@ export default {
         ]
       },
       ready: function() {
-        this.getPeoples();
+        // this.getPeoples();
       },
       formOptions: {
         validateAfterLoad: true,

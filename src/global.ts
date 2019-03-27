@@ -33,7 +33,7 @@ export const CONFIG = {
   GET_TOGGLE_ACTION: serverHost + '/get-toggle-action',
   SEM_POST: serverHost + '/get-object-sem',
   OBJ_LIST: 8,
-  DEBUG: true,
+  DEBUG: false,
   OBJ_BOUND: 100,
   TOGGLE_BOUND: 10000
 }

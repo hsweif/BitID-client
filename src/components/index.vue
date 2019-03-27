@@ -122,7 +122,9 @@ export default {
         loading: false
       },
       formData: {},
-      dataDict: []
+      dataDict: [],
+      toggle: {},
+      condition: {}
     };
   },
   methods: {
@@ -135,17 +137,19 @@ export default {
       xhr.open("POST", CONFIG.saveAPI, true);
       xhr.onreadystatechange = function() {
         if (xhr.readyState == 4) {
-          if(CONFIG.DEBUG) {
-            alert("successfully submitted");
+          if (CONFIG.DEBUG) {
+            alert(tagData);
           }
           reset();
-          vm.sortable_item = []
+          vm.sortable_item = [];
           router.replace({ name: "Form" });
         }
       };
       xhr.send(form);
       // this.formData['object'] = this.objList[this.formData['object']]['label_name']
-      alert(JSON.stringify(tagData));
+      if (CONFIG.DEBUG) {
+        alert(JSON.stringify(this.formData));
+      }
       // this.$router.push("/render");
     },
     processSortableItem() {
@@ -159,14 +163,11 @@ export default {
       tagData["Semantic"] = [];
     },
     handleAdd() {
+      /*
       let rObjState = "";
       let tgState = "";
       let rObj = "";
       let bv = "";
-      if(util.DEBUG) {
-      alert(JSON.stringify(this.formData));
-
-      }
       if (this.formData["related state"] !== undefined) {
         rObjState = this.formData["related state"] == 0 ? "OFF" : "ON";
       }
@@ -183,13 +184,30 @@ export default {
       if (this.formData["semantic meaning"] !== undefined) {
         bv = this.formData["semantic meaning"];
       }
+      */
+      let cond = []
+      for(let c in this.condition) {
+        cond.push({
+          object: c,
+          semantic: this.condition[c]
+        })
+      }
+      let tog = []
+      for(let t in this.toggle)
+      {
+        tog.push({
+          object: t,
+          control: this.toggle[t]
+        })
+      }
       let correlateCase = {
-        State: tgState,
-        RelatedObject: rObj,
-        RelatedObjState: rObjState,
-        Behavior: bv
+        condition: cond,
+        toggle: tog
       };
       tagData["Semantic"].push(correlateCase);
+      if(CONFIG.DEBUG) {
+        alert(JSON.stringify(tagData))
+      }
     },
     // modal内数据字典选项发生改变触发事件
     handleDataDictChange(val) {
@@ -217,13 +235,13 @@ export default {
           }
         };
         xhr.send(null);
-      } else if(obj.id >= CONFIG.TOGGLE_BOUND) {
+      } else if (obj.id >= CONFIG.TOGGLE_BOUND) {
         // TODO: Support toggle
         let form = new FormData();
         form.append("toggle", obj.parent_name);
         xhr.open("POST", CONFIG.GET_TOGGLE_ACTION, true);
-        xhr.onreadystatechange = function(){
-          if(xhr.readyState == 4) {
+        xhr.onreadystatechange = function() {
+          if (xhr.readyState == 4) {
             let response = JSON.parse(xhr.responseText);
             let actList = response["action"];
             vm.modalFormData = Object.assign({}, vm.modalFormData, {
@@ -235,10 +253,9 @@ export default {
               parent_name: null
             });
           }
-        }
+        };
         xhr.send(form);
-      }
-      else if (obj.id >= CONFIG.OBJ_BOUND) {
+      } else if (obj.id >= CONFIG.OBJ_BOUND) {
         let form = new FormData();
         form.append("objName", obj.parent_name);
         xhr.open("POST", CONFIG.SEM_POST, true);
@@ -246,8 +263,8 @@ export default {
           if (xhr.readyState == 4) {
             let response = JSON.parse(xhr.responseText);
             let semList = response["semantic"];
-            if(CONFIG.DEBUG) {
-              alert(JSON.stringify(semList))
+            if (CONFIG.DEBUG) {
+              alert(JSON.stringify(semList));
             }
             vm.modalFormData = Object.assign({}, vm.modalFormData, {
               name: obj.parent_name,
@@ -276,6 +293,25 @@ export default {
     // 控件回填数据
     handleChangeVal(val, element) {
       this.$set(this.formData, element.obj.name, val);
+      if (CONFIG.DEBUG) {
+        alert(JSON.stringify(element));
+      }
+      if (element.ele == "toggle") {
+        let index = element.obj.value;
+        this.$data.toggle[element.obj.label] =
+          element.obj.items[index].label_name;
+        if (CONFIG.DEBUG) {
+          alert(JSON.stringify(this.$data.toggle));
+        }
+      } else if (element.ele == "select") {
+        // TODO: Add support to object selection
+        let index = element.obj.value;
+        this.$data.condition[element.obj.label] =
+          element.obj.items[index].label_name;
+        if (CONFIG.DEBUG) {
+          alert(JSON.stringify(this.$data.condition));
+        }
+      }
     },
     // https://github.com/SortableJS/Vue.Draggable#clone
     // 克隆,深拷贝对象
@@ -321,7 +357,21 @@ export default {
     },
     // 删除克隆控件
     removeEle(index) {
+      if (CONFIG.DEBUG) {
+        // alert(JSON.stringify(this.sortable_item[index]))
+      }
       let name = this.sortable_item[index].obj.name;
+      if (this.sortable_item[index].obj.type == "toggle") {
+        delete this.toggle[name];
+        if (CONFIG.DEBUG) {
+          alert(JSON.stringify(this.toggle));
+        }
+      } else if (this.sortable_item[index].obj.type == "select") {
+        delete this.condition[name];
+        if (CONFIG.DEBUG) {
+          alert(JSON.stringify(this.condition));
+        }
+      }
       this.sortable_item.splice(index, 1);
       if (!name) return;
       for (let i in this.sortable_item) {
@@ -428,9 +478,9 @@ export default {
               id: CONFIG.OBJ_BOUND + cnt,
               type: "select",
               label: objList[o],
-              parent_name: objList[o] 
+              parent_name: objList[o]
             });
-            cnt ++;
+            cnt++;
           }
         }
       };
@@ -439,18 +489,18 @@ export default {
       let toggleXHR = new XMLHttpRequest();
       toggleXHR.open("GET", CONFIG.GET_TOGGLE, true);
       toggleXHR.onreadystatechange = function() {
-        if(toggleXHR.readyState == 4) {
+        if (toggleXHR.readyState == 4) {
           let response = JSON.parse(toggleXHR.responseText);
-          let toggleList = response['toggle'];
+          let toggleList = response["toggle"];
           let cnt = 0;
-          for(let t in toggleList) {
+          for (let t in toggleList) {
             vm.dataDict.push({
               id: CONFIG.TOGGLE_BOUND + cnt,
               type: "toggle",
               label: toggleList[t],
-              parent_name: toggleList[t] 
-            })
-            cnt ++;
+              parent_name: toggleList[t]
+            });
+            cnt++;
           }
         }
       };
