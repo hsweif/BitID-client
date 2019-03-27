@@ -1,26 +1,28 @@
 <template>
-<table border="1" style="float: middle">
+<div class="outer">
+<table class="mytable" border="1">
   <tr>
-      <span>1. Select the object name from the list or input manually</span>
+      <span class="mytext">1. Select the object name from the list or input manually</span>
   </tr>
   <tr>
-      <input v-model="objectName" placeholder="Input manually">
+      <input class="myinput" v-model="objectName" placeholder="Input manually">
   </tr>
   <tr>
-      <objList @selectList="getSelected"></objList>
+      <objList class="input2" @selectList="getSelected"></objList>
   </tr>
     <tr>
-      <span>When it is detected, its semantic meaning is:</span>
-      <input v-model="on_semantic">
+      <span class="mytext">When it is detected, its semantic meaning is:</span>
+      <input class="input3" v-model="on_semantic">
     </tr>
     <tr>
-      <span>When it is undetected, its semantic meaning is:</span>
-      <input v-model="off_semantic">
+      <span class="mytext">When it is undetected, its semantic meaning is:</span>
+      <input class="input4" v-model="off_semantic">
     </tr>
     <tr>
-      <button v-on:click="Submit">Submit</button>
+      <el-button class="mybutton" type="success" v-on:click="Submit" round>Submit</el-button>  
     </tr>
 </table>
+</div>
 </template>
 
 <script lang="ts">
@@ -68,3 +70,38 @@ export default Vue.extend({
   }
 });
 </script>
+
+<style scoped>
+.mytable {
+  margin-left: 34%;
+  margin-top: 5%;
+  padding: 3%;
+}
+.mytext{
+  font-size: 17px;
+}
+.myinput{
+  width: 480px;
+  height: 40px;
+  margin: 10px;
+}
+.input2{
+  margin: 10px;
+  margin-bottom: 0px;
+  width: 480px;
+}
+.input3{
+  margin-left: 22px;
+  height: 30px;
+}
+.input4{
+  margin-left: 3px;
+  height: 30px;
+  margin-top: 5px;
+}
+.mybutton{
+  margin-left: 380px;
+  margin-top:20px;
+  width: 120px;
+}
+</style>

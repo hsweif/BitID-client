@@ -1,9 +1,24 @@
 <template>
-  <div>
-    <objList @selectList="getSelected"></objList>
-    <button v-on:click="Confirm">Confirm</button>
-    <button v-on:click="Back">Stop</button>
-    <li v-for="item in items">{{ item }}</li>
+  <div class="outer">
+    <div class="inter">
+      <el-tooltip effect="dark" content="Confirm" placement="top">
+        <el-button class="button1" type="success" icon="el-icon-check" circle v-on:click="Confirm"></el-button>
+      </el-tooltip>
+      <el-tooltip effect="dark" content="Stop" placement="top">
+        <el-button class="button2" type="danger" icon="el-icon-close" circle v-on:click="Back"></el-button>
+      </el-tooltip>
+    </div>
+    <div class = "second">
+    <objList class="myobjlist" @selectList="getSelected"></objList>
+    </div>
+    <div class="vfor">
+      <el-card class="box-card">
+        <div v-for="item in items" :key="item" class="text item">
+          {{ item }}
+        </div>
+      </el-card>
+    <!-- <li v-for="item in items">{{ item }}</li> -->
+    </div>
   </div>
 </template>
 
@@ -50,3 +65,33 @@ export default Vue.extend({
 });
 </script>
 
+<style scoped>
+  .outer{
+    margin-top: 5%;
+  }
+  .vfor{
+    margin-top:1%;
+    margin-left: 30%;
+    width:600px;
+  }
+  .second{
+  }
+  .inter{
+    width:7%;
+    float:left;
+    margin-left: 33%;
+    margin-right: 0%; 
+  }
+  .text {
+    font-size: 20px;
+  }
+
+  .item {
+    padding: 5px 0;
+  }
+  .box-card {
+    height:480px;
+    text-align: left;
+    padding-left: 10%;
+  }
+</style>
