@@ -89,6 +89,11 @@
         </div>
       </Modal>
     </i-row>
+    <i-row>
+      <div>
+        <span>testing</span>
+      </div>
+    </i-row>
   </div>
 </template>
 
@@ -252,6 +257,7 @@ export default {
               label: obj.parent_name,
               parent_name: null
             });
+            router.replace({ name: "Notification" });
           }
         };
         xhr.send(form);
@@ -274,6 +280,7 @@ export default {
               label: obj.parent_name,
               parent_name: null
             });
+            router.replace({ name: "Notification" });
           }
         };
         xhr.send(form);
