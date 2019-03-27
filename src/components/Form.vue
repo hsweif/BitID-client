@@ -116,3 +116,11 @@ export default {
   }
 };
 </script>
+
+<style scoped>
+.panel-body{
+  width: 80%;
+  margin-left: 10%;
+  height: 600px;
+}
+</style>

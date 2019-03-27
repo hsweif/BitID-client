@@ -1,9 +1,9 @@
 <template>
   <div class="sensor-body">
-    <select v-model="selected" @change="listChange">
+    <select class="selected" v-model="selected" @change="listChange">
       <option v-for="option in options" v-bind:key="option">{{ option }}</option>
     </select>
-    <button v-on:click="Refresh">refresh</button>
+    <el-button type="primary" plain v-on:click="Refresh">refresh</el-button>
   </div>
 </template>
 
@@ -43,3 +43,13 @@ export default Vue.extend({
   }
 });
 </script>
+<style scoped>
+.selected{
+  width : 300px;
+  height: 40px;
+  margin-right: 10px;
+  margin-bottom: 20px;
+  font-weight: bold;
+  font-size: 3ch
+}
+</style>

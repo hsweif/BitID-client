@@ -8,6 +8,8 @@ import 'iview/dist/styles/iview.css'
 import cascaderMulti from 'cascader-multi'
 import iviewArea from 'iview-area'
 import custom_form from './components/custom_form'
+import ElementUI from "element-ui";
+import "element-ui/lib/theme-chalk/index.css";
 
 import axios from 'axios'
 
@@ -16,6 +18,7 @@ Vue.use(iview)
 Vue.use(cascaderMulti)
 Vue.use(custom_form)
 Vue.use(iviewArea)
+Vue.use(ElementUI);
 
 // axios.defaults.baseURL = '/apis';
 Vue.prototype.$http = axios
