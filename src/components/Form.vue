@@ -9,7 +9,7 @@
 <script>
 import Vue from "vue";
 import VueFormGenerator from "vue-form-generator";
-import "vue-form-generator/dist/vfg.css";
+// import "vue-form-generator/dist/vfg.css";
 import router from "../router/index";
 import { tagData, epcAPI, epcList, changeEpc, CONFIG } from "../global";
 
@@ -26,7 +26,8 @@ export default {
       options: epcList,
       model: {
         EPC: "",
-        TagType: ""
+        TagType: "",
+        SensingType: ""
       },
       schema: {
         groups: [
@@ -78,7 +79,14 @@ export default {
               {
                 type: "select",
                 model: "TagType",
-                values: ["Interaction", "Sensor", "Notification"]
+                values: ["Interaction", "Sensor", "Notification"],
+                label: "What kind of the tag is?"
+              },
+              {
+                type: "select",
+                label: "Sensing type",
+                values: ["persistant", "non-persistant"],
+                model: "Sensing Type"
               }
             ]
           },
@@ -94,6 +102,7 @@ export default {
                   ) {
                     tagData["EPC"] = model.EPC;
                     tagData["TagType"] = model.TagType;
+                    tagData["SensingType"] = model.SensingType;
                     router.push({ name: model.TagType });
                   } else if (model.TagType === 'Notification'){
                     router.push({ name: 'Notification'})

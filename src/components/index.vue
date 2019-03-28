@@ -89,7 +89,7 @@
         </div>
       </Modal>
     </i-row>
-    <i-row>
+    <i-row span="24">
       <div>
         <span>testing</span>
       </div>

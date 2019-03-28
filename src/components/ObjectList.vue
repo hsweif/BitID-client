@@ -3,7 +3,6 @@
     <select class="selected" v-model="selected" @change="listChange">
       <option v-for="option in options" v-bind:key="option">{{ option }}</option>
     </select>
-    <el-button type="primary" plain v-on:click="Refresh">refresh</el-button>
   </div>
 </template>
 
@@ -50,6 +49,6 @@ export default Vue.extend({
   margin-right: 10px;
   margin-bottom: 20px;
   font-weight: bold;
-  font-size: 3ch
+  font-size: 2ch
 }
 </style>

@@ -1,6 +1,7 @@
 export let tagData = {
   EPC: '',
   TagType: '',
+  SensingType: '',
   Semantic: []
 }
 
@@ -17,6 +18,7 @@ export function reset(){
   tagData = {
     EPC: '',
     TagType: '',
+    SensingType: '',
     Semantic: []
   }
 }
@@ -26,7 +28,7 @@ export const LABEL = {
 }
 
 export const CONFIG = {
-  UPDATE_INTERVAL: 3000,
+  UPDATE_INTERVAL: 50,
   saveAPI: 'http://localhost:8888/save-tag',
   GET_OBJ: serverHost + '/get-objects',
   GET_TOGGLE: serverHost + '/get-toggle',
