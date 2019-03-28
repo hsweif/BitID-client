@@ -2,21 +2,36 @@
   <div class="outer">
     <div class="inter">
       <el-tooltip effect="dark" content="Confirm" placement="top">
-        <el-button class="button1" type="success" icon="el-icon-check" circle v-on:click="Confirm"></el-button>
+        <el-button class="button1" type="success" icon="el-icon-check" round v-on:click="Confirm">Confirm</el-button>
       </el-tooltip>
       <el-tooltip effect="dark" content="Stop" placement="top">
-        <el-button class="button2" type="danger" icon="el-icon-close" circle v-on:click="Back"></el-button>
+        <el-button class="button2" type="danger" icon="el-icon-close" round v-on:click="Back">Stop</el-button>
       </el-tooltip>
     </div>
-    <div class = "second">
+    <!-- <div class = "second">
     <objList class="myobjlist" @selectList="getSelected"></objList>
-    </div>
+    </div> -->
     <div class="vfor">
-      <el-card class="box-card">
+      <el-table
+      :data="tableData"
+      style="width: 100%">
+      <el-table-column
+        prop="name"
+        label="Object"
+        width="180"
+        :filters="namefilter"
+        :filter-method="filterTag">
+      </el-table-column>
+      <el-table-column
+        prop="status"
+        label="Status">
+      </el-table-column>
+    </el-table>
+      <!-- <el-card class="box-card">
         <div v-for="item in items" :key="item" class="text item">
           {{ item }}
         </div>
-      </el-card>
+      </el-card> -->
     <!-- <li v-for="item in items">{{ item }}</li> -->
     </div>
   </div>
@@ -34,32 +49,74 @@ export default Vue.extend({
     return {
       selectedObj: "",
       items: [],
-      stopHandler: undefined
+      namefilter:[],
+      stopHandler: undefined,
+      options:['ste','ahs'],
+      tableData: [],
     };
   },
   methods: {
     getSelected: function(msg) {
       this.selectedObj = msg;
     },
-    getObjectState: function() {
+    Refresh: function() {
       let xhr = new XMLHttpRequest();
-      let form = new FormData();
+      xhr.open("GET", serverHost + "/get-objects", true);
       let vm = this;
-      form.append("objName", this.selectedObj);
-      xhr.open("POST", serverHost + "/get-object-state", true);
       xhr.onreadystatechange = function() {
         if (xhr.readyState == 4) {
-          let response = JSON.parse(xhr.responseText);
-          vm.$data.items = response["info"];
+          let response = JSON.parse(xhr.responseText)
+          vm.$data.options = response['objects'];
         }
       };
-      xhr.send(form);
+      xhr.send(null);
+    },
+    getObjectState: function() {
+      let xhr = new XMLHttpRequest();
+      let vm = this;
+      vm.$data.items = [];
+      for (var i=0;i<this.options.length;i++) {
+        let form = new FormData();
+        form.append("objName", this.options[i]);
+        xhr.open("POST", serverHost + "/get-object-state", true);
+        xhr.onreadystatechange = function() {
+          if (xhr.readyState == 4) {
+            let response = JSON.parse(xhr.responseText);
+            vm.$data.items.push(response["info"][0]);
+          }
+        };
+        xhr.send(form);
+      }
+      this.tableData = [];
+      console.log(this.options);
+      var tempdic={};
+      for (var i=0;i<this.options.length;i++) {
+        tempdic={};
+        tempdic['name'] = this.options[i];
+        tempdic['status'] = this.items[i];
+        this.tableData.push(tempdic);
+      }
+      var name = "";
+      this.namefilter = []
+      for (var i=0;i<this.options.length;i++) {
+        tempdic={};
+        tempdic['text'] = this.options[i];
+        tempdic['value'] = this.options[i];
+        this.namefilter.push(tempdic);
+      }
+      console.log(this.namefilter);
     },
     Confirm: function() {
       this.$data.stopHandler = setInterval(this.getObjectState, CONFIG.UPDATE_INTERVAL);
     },
     Back: function() {
       clearInterval(this.$data.stopHandler);
+    },
+    created(){
+    this.Refresh();
+    },
+    filterTag(value, row) {
+        return row.name === value;
     }
   }
 });
@@ -68,18 +125,24 @@ export default Vue.extend({
 <style scoped>
   .outer{
     margin-top: 5%;
+    text-align: center
   }
   .vfor{
     margin-top:1%;
     margin-left: 30%;
     width:600px;
   }
+  .button1{
+    width: 150px;
+    margin-right: 50px;
+    margin-bottom: 50px;
+  }
+  .button2{
+    width: 150px;
+  }
   .second{
   }
   .inter{
-    width:7%;
-    float:left;
-    margin-left: 33%;
     margin-right: 0%; 
   }
   .text {
