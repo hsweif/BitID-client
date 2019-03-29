@@ -15,8 +15,8 @@ export default new Router({
   routes: [
     {
       path: '/',
-      name: 'Form',
-      component: Form 
+      name: 'Home',
+      component: Notification 
     },
     {
       path: 'Interaction',
@@ -29,14 +29,9 @@ export default new Router({
       component: NewSensor 
     },
     {
-      path: 'render',
-      name: 'render',
-      component: render
-    },
-    {
-      path: 'notification',
-      name: 'Notification',
-      component: Notification
+      path: 'Form',
+      name: 'Form',
+      component: Form 
     }
   ]
 })

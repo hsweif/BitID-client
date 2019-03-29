@@ -147,7 +147,7 @@ export default {
           }
           reset();
           vm.sortable_item = [];
-          router.replace({ name: "Form" });
+          router.replace({ name: "Home" });
         }
       };
       xhr.send(form);

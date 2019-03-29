@@ -59,7 +59,7 @@ export default Vue.extend({
         if (xhr.readyState == 4) {
           alert("successfully submitted");
           reset();
-          router.replace({ name: "Form" });
+          router.replace({ name: "Home" });
         }
       };
       xhr.send(form);

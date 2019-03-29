@@ -43,7 +43,6 @@ export default {
                 inputType: "text",
                 model: "EPC",
                 label: "Manual input",
-                placeholder: "Keep empty if you just want to check the state",
                 required: true,
                 buttons: [
                   {
@@ -79,7 +78,7 @@ export default {
               {
                 type: "select",
                 model: "TagType",
-                values: ["Interaction", "Sensor", "Notification"],
+                values: ["Interaction", "Sensor"],
                 label: "What kind of the tag is?"
               },
               {
@@ -104,9 +103,7 @@ export default {
                     tagData["TagType"] = model.TagType;
                     tagData["SensingType"] = model.SensingType;
                     router.push({ name: model.TagType });
-                  } else if (model.TagType === 'Notification'){
-                    router.push({ name: 'Notification'})
-                  }
+                  } 
                 }
               }
             ]

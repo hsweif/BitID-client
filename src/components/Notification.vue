@@ -7,6 +7,9 @@
       <el-tooltip effect="dark" content="Stop" placement="top">
         <el-button class="button2" type="danger" icon="el-icon-close" round v-on:click="Back">Stop</el-button>
       </el-tooltip>
+      <el-tooltip effect="dark" content="Add a new tag" placement="top">
+        <el-button class="button3" type="infor" icon="el-icon-text" round v-on:click="DefineTag">Add a new tag</el-button>
+      </el-tooltip>
     </div>
     <!-- <div class = "second">
     <objList class="myobjlist" @selectList="getSelected"></objList>
@@ -111,6 +114,9 @@ export default Vue.extend({
     },
     Back: function() {
       clearInterval(this.$data.stopHandler);
+    },
+    DefineTag: function() {
+      router.push({name: 'Form'});
     },
     created(){
     this.Refresh();
