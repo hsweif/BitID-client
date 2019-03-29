@@ -117,10 +117,14 @@ export default Vue.extend({
       this.stopHandler = setInterval(this.getObjectState, CONFIG.UPDATE_INTERVAL);
     },
     Back: function() {
-      this.clearInterval(this.stopHandler);
+      if(this.stopHandler !== undefined) {
+        this.clearInterval(this.stopHandler);
+      }
     },
     DefineTag: function() {
-      this.clearInterval(this.$data.stopHandler);
+      if(this.stopHandler !== undefined) {
+        this.clearInterval(this.$data.stopHandler);
+      }
       router.push({name: 'Form'});
     },
     created(){

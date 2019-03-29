@@ -94,8 +94,21 @@
     <i-row>
       <i-col span="12">
         <div class="b-a">
-          <li v-for="(condition, toggle) in semanticList" v-bind:key="condition">
-            <span>{{contidion}}</span>
+          <span >
+            Condition information.
+          </span>
+          <li v-for="(sem,cnt) in semanticList">
+            Semantic {{cnt+1}}:
+            If (
+            <span v-for="con in sem.condition">
+              {{con.object}} is {{con.semantic}},
+            </span>
+            )
+            then(
+            <span v-for="tog in sem.toggle">
+              {{tog.object}} will {{tog.control}},
+            </span>
+            )
           </li>
         </div>
       </i-col>
@@ -105,6 +118,7 @@
 
 <script src="js/vue-resource.js"></script>
 <script>
+// If {{sem.contidion.object}}: {{sem.condition.semantic}} then {{sem.toggle.object}}: {{sem.toggle.control}}.
 import draggable from "vuedraggable";
 import form_list from "./custom_form/FormList";
 import {
@@ -193,11 +207,9 @@ export default {
         toggle: tog
       };
       tagData["Semantic"].push(correlateCase);
-      semanticList.push(correlateCase)
+      this.semanticList.push(correlateCase)
       this.sortable_item = []
-      if (CONFIG.DEBUG) {
-        alert(JSON.stringify(tagData));
-      }
+      alert(JSON.stringify(this.$data.semanticList));
     },
     // modal内数据字典选项发生改变触发事件
     handleDataDictChange(val) {
