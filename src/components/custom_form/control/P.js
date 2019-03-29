@@ -7,7 +7,7 @@ export default (_self, h) => {
         'color': _self.obj.color || "#000"
       },
       domProps: {
-        innerHTML: _self.obj.label || "文本标签"
+        innerHTML: _self.obj.label || "Please drag the combination of conidtions and toggles into the left-bottom box."
       }
     })
   ]
@@ -15,7 +15,7 @@ export default (_self, h) => {
 
 export const pConf = {
   config: true,
-  label: '文本标签',
+  label: 'Please drag the conidtions and toggles into the left-bottom box. After dragging, please select which object/toggle do you mean. (Click the gear icon on the right-up of the select box)',
   color: '#000',
   marginTop: 0,
   marginBottom: 24

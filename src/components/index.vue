@@ -1,8 +1,8 @@
 <template>
   <div class="container">
     <i-row>
-      <i-col span="12" class="sortable_container">
-        <Form :label-width="100" class="b-a">
+      <i-col span="24" class="sortable_container">
+        <Form :label-width="100" class="a-a">
           <draggable :clone="cloneData" :list="form_list" :options="dragOptions1">
             <transition-group
               class="form-list-group"
@@ -20,6 +20,8 @@
           </draggable>
         </Form>
       </i-col>
+    </i-row>
+    <i-row>
       <i-col span="12" class="sortable_item">
         <Form
           ref="formValidate"
@@ -89,10 +91,14 @@
         </div>
       </Modal>
     </i-row>
-    <i-row span="24">
-      <div>
-        <span>testing</span>
-      </div>
+    <i-row>
+      <i-col span="12">
+        <div class="b-a">
+          <li v-for="(condition, toggle) in semanticList" v-bind:key="condition">
+            <span>{{contidion}}</span>
+          </li>
+        </div>
+      </i-col>
     </i-row>
   </div>
 </template>
@@ -120,6 +126,7 @@ export default {
       sortable_item: [],
       objList: [],
       showModal: false,
+      ratio: 0.5,
       // 深拷贝对象，防止默认空对象被更改
       // 颜色选择器bug，对象下color不更新
       modalFormData: {
@@ -129,7 +136,8 @@ export default {
       formData: {},
       dataDict: [],
       toggle: {},
-      condition: {}
+      condition: {},
+      semanticList: []
     };
   },
   methods: {
@@ -166,28 +174,29 @@ export default {
       tagData["Semantic"] = [];
     },
     handleAdd() {
-      let cond = []
-      for(let c in this.condition) {
+      let cond = [];
+      for (let c in this.condition) {
         cond.push({
           object: c,
           semantic: this.condition[c]
-        })
+        });
       }
-      let tog = []
-      for(let t in this.toggle)
-      {
+      let tog = [];
+      for (let t in this.toggle) {
         tog.push({
           object: t,
           control: this.toggle[t]
-        })
+        });
       }
       let correlateCase = {
         condition: cond,
         toggle: tog
       };
       tagData["Semantic"].push(correlateCase);
-      if(CONFIG.DEBUG) {
-        alert(JSON.stringify(tagData))
+      semanticList.push(correlateCase)
+      this.sortable_item = []
+      if (CONFIG.DEBUG) {
+        alert(JSON.stringify(tagData));
       }
     },
     // modal内数据字典选项发生改变触发事件
@@ -517,6 +526,14 @@ export default {
 
 .b-a {
   border: 1px solid #ccc;
+  min-height: 260px;
+  margin-top: 15px;
+}
+
+.a-a {
+  border: 1px solid #ccc;
+  min-height: 200px;
+  margin: 15px;
 }
 
 .ghost {
@@ -589,5 +606,13 @@ export default {
   font-family: SimSun;
   font-size: 12px;
   color: #ed3f14;
+}
+
+.demo-split {
+  height: 200px;
+  border: 1px solid #dcdee2;
+}
+.demo-split-pane {
+  padding: 10px;
 }
 </style>
