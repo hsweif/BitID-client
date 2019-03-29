@@ -151,11 +151,9 @@ export default {
         }
       };
       xhr.send(form);
-      // this.formData['object'] = this.objList[this.formData['object']]['label_name']
       if (CONFIG.DEBUG) {
         alert(JSON.stringify(this.formData));
       }
-      // this.$router.push("/render");
     },
     processSortableItem() {
       let processedItems = [];
@@ -168,28 +166,6 @@ export default {
       tagData["Semantic"] = [];
     },
     handleAdd() {
-      /*
-      let rObjState = "";
-      let tgState = "";
-      let rObj = "";
-      let bv = "";
-      if (this.formData["related state"] !== undefined) {
-        rObjState = this.formData["related state"] == 0 ? "OFF" : "ON";
-      }
-      if (this.formData["tag state"] !== undefined) {
-        tgState = this.formData["tag state"] == 0 ? "OFF" : "ON";
-      }
-      if (this.formData["object"] !== undefined) {
-        if (this.$data.objList[this.formData["object"]] !== undefined) {
-          rObj = this.$data.objList[this.formData["object"]]["label_name"];
-        } else {
-          rObj = this.formData["object"];
-        }
-      }
-      if (this.formData["semantic meaning"] !== undefined) {
-        bv = this.formData["semantic meaning"];
-      }
-      */
       let cond = []
       for(let c in this.condition) {
         cond.push({

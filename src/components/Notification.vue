@@ -2,7 +2,7 @@
   <div class="outer">
     <div class="inter">
       <el-tooltip effect="dark" content="Confirm" placement="top">
-        <el-button class="button1" type="success" icon="el-icon-check" round v-on:click="Confirm">Confirm</el-button>
+        <el-button class="button1" type="success" icon="el-icon-check" round v-on:click="Confirm">Refresh</el-button>
       </el-tooltip>
       <el-tooltip effect="dark" content="Stop" placement="top">
         <el-button class="button2" type="danger" icon="el-icon-close" round v-on:click="Back">Stop</el-button>
@@ -51,7 +51,7 @@ export default Vue.extend({
   data() {
     return {
       selectedObj: "",
-      items: [],
+      items: {},
       namefilter:[],
       stopHandler: undefined,
       options:['ste','ahs'],
@@ -75,28 +75,32 @@ export default Vue.extend({
       xhr.send(null);
     },
     getObjectState: function() {
-      let xhr = new XMLHttpRequest();
+      // TODO: Enclose to one HTTP request.
       let vm = this;
-      vm.$data.items = [];
       for (var i=0;i<this.options.length;i++) {
         let form = new FormData();
-        form.append("objName", this.options[i]);
+        let xhr = new XMLHttpRequest();
+        let objName = this.options[i];
+        form.append("objName", objName);
         xhr.open("POST", serverHost + "/get-object-state", true);
         xhr.onreadystatechange = function() {
           if (xhr.readyState == 4) {
             let response = JSON.parse(xhr.responseText);
-            vm.$data.items.push(response["info"][0]);
+            vm.$data.items[objName] = response["info"][0]
+            if(objName == 'book'){
+              console.log(response["info"][0])
+            }
           }
         };
         xhr.send(form);
       }
+      console.log(this.$data.items);
       this.tableData = [];
-      console.log(this.options);
       var tempdic={};
       for (var i=0;i<this.options.length;i++) {
         tempdic={};
         tempdic['name'] = this.options[i];
-        tempdic['status'] = this.items[i];
+        tempdic['status'] = this.items[this.options[i]];
         this.tableData.push(tempdic);
       }
       var name = "";
@@ -107,9 +111,9 @@ export default Vue.extend({
         tempdic['value'] = this.options[i];
         this.namefilter.push(tempdic);
       }
-      console.log(this.namefilter);
     },
     Confirm: function() {
+      this.Refresh();
       this.$data.stopHandler = setInterval(this.getObjectState, CONFIG.UPDATE_INTERVAL);
     },
     Back: function() {
@@ -119,7 +123,7 @@ export default Vue.extend({
       router.push({name: 'Form'});
     },
     created(){
-    this.Refresh();
+      this.Refresh();
     },
     filterTag(value, row) {
         return row.name === value;
