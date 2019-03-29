@@ -2,7 +2,7 @@
 <div class="outer">
 <table class="mytable" border="1">
   <tr>
-      <span class="mytext">1. Select the object name from the list or input manually</span>
+      <span class="mytext">1. Select or input the sensing object name</span>
   </tr>
   <tr>
       <input class="myinput" v-model="objectName" placeholder="Input manually">
@@ -11,12 +11,12 @@
       <objList class="input2" @selectList="getSelected"></objList>
   </tr>
     <tr>
-      <span class="mytext">When it is detected, its semantic meaning is:</span>
-      <input class="input3" v-model="on_semantic">
+      <span class="mytext">When the tag is visible, the object is:</span>
+      <input class="input3" v-model="on_semantic" placeholder="e.g. open">
     </tr>
     <tr>
-      <span class="mytext">When it is undetected, its semantic meaning is:</span>
-      <input class="input4" v-model="off_semantic">
+      <span class="mytext">When the tag is invisible, the object is:</span>
+      <input class="input4" v-model="off_semantic" placeholder="e.g. close">
     </tr>
     <tr>
       <el-button class="mybutton" type="success" v-on:click="Submit" round>Submit</el-button>  
@@ -73,7 +73,7 @@ export default Vue.extend({
 
 <style scoped>
 .mytable {
-  margin-left: 34%;
+  margin-left: 30%;
   margin-top: 5%;
   padding: 3%;
 }

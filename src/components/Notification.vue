@@ -8,7 +8,7 @@
         <el-button class="button2" type="danger" icon="el-icon-close" round v-on:click="Back">Stop</el-button>
       </el-tooltip>
       <el-tooltip effect="dark" content="Add a new tag" placement="top">
-        <el-button class="button3" type="infor" icon="el-icon-text" round v-on:click="DefineTag">Add a new tag</el-button>
+        <el-button class="button3"  type="primary" icon="el-icon-edit" circle v-on:click="DefineTag"></el-button>
       </el-tooltip>
     </div>
     <!-- <div class = "second">
@@ -145,6 +145,9 @@ export default Vue.extend({
   }
   .button2{
     width: 150px;
+  }
+  .button3{
+    margin-left: 12%;
   }
   .second{
   }
