@@ -51,10 +51,16 @@ export default Vue.extend({
   data() {
     return {
       selectedObj: "",
+<<<<<<< HEAD
+      items: ['put down'],
+||||||| merged common ancestors
+      items: [],
+=======
       items: {},
+>>>>>>> e364ea35dd4c362a311305b4cbe5522b6a608035
       namefilter:[],
       stopHandler: undefined,
-      options:['ste','ahs'],
+      options:['trophy'],
       tableData: [],
     };
   },
@@ -77,6 +83,12 @@ export default Vue.extend({
     getObjectState: function() {
       // TODO: Enclose to one HTTP request.
       let vm = this;
+<<<<<<< HEAD
+      // vm.$data.items = [];
+||||||| merged common ancestors
+      vm.$data.items = [];
+=======
+>>>>>>> e364ea35dd4c362a311305b4cbe5522b6a608035
       for (var i=0;i<this.options.length;i++) {
         let form = new FormData();
         let xhr = new XMLHttpRequest();
@@ -103,6 +115,7 @@ export default Vue.extend({
         tempdic['status'] = this.items[this.options[i]];
         this.tableData.push(tempdic);
       }
+      console.log(this.tableData);
       var name = "";
       this.namefilter = []
       for (var i=0;i<this.options.length;i++) {
