@@ -5,7 +5,7 @@
         <el-button class="button1" type="success" icon="el-icon-check" round v-on:click="Confirm">Refresh</el-button>
       </el-tooltip>
       <el-tooltip effect="dark" content="Stop" placement="top">
-        <el-button class="button2" type="danger" icon="el-icon-close" round v-on:click="Back">Stop</el-button>
+        <el-button class="button2" type="danger" icon="el-icon-close" round v-on:click="StopUpdate">Stop</el-button>
       </el-tooltip>
       <el-tooltip effect="dark" content="Add a new tag" placement="top">
         <el-button class="button3"  type="primary" icon="el-icon-edit" circle v-on:click="DefineTag"></el-button>
@@ -75,9 +75,7 @@ export default Vue.extend({
       xhr.send(null);
     },
     getObjectState: function() {
-      // TODO: Enclose to one HTTP request.
       let vm = this;
-      // FIXME: Too frequent http request 
       let xhr = new XMLHttpRequest();
       xhr.open("GET", CONFIG.GET_ALL_OBJ, true);
       xhr.onreadystatechange = function() {
@@ -134,22 +132,24 @@ export default Vue.extend({
     },
     Confirm: function() {
       this.Refresh();
+      this.StopUpdate();
       this.stopHandler = setInterval(this.getObjectState, CONFIG.UPDATE_INTERVAL);
     },
-    Back: function() {
-      this.clearInterval(this.stopHandler);
+    StopUpdate: function(){
+      if(this.stopHandler !== undefined) {
+        clearInterval(this.stopHandler);
+        this.stopHandler = undefined;
+      }
     },
     DefineTag: function() {
-      if(this.stopHandler !== undefined) {
-        this.clearInterval(this.$data.stopHandler);
-      }
+      this.StopUpdate();
       router.push({name: 'Form'});
     },
     created(){
       this.Refresh();
     },
     filterTag(value, row) {
-        return row.name === value;
+      return row.name === value;
     }
   }
 });
