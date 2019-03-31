@@ -87,7 +87,9 @@ export default Vue.extend({
             console.log(s);
             console.log(response[s])
             console.log(response[s][0])
-            vm.$data.items[s] = response[s][0];
+            if(response[s][0] !== 'undetected') {
+              vm.$data.items[s] = response[s][0];
+            }
           }
         }
       }
