@@ -51,13 +51,7 @@ export default Vue.extend({
   data() {
     return {
       selectedObj: "",
-<<<<<<< HEAD
-      items: ['put down'],
-||||||| merged common ancestors
-      items: [],
-=======
       items: {},
->>>>>>> e364ea35dd4c362a311305b4cbe5522b6a608035
       namefilter:[],
       stopHandler: undefined,
       options:['trophy'],
@@ -83,12 +77,22 @@ export default Vue.extend({
     getObjectState: function() {
       // TODO: Enclose to one HTTP request.
       let vm = this;
-<<<<<<< HEAD
-      // vm.$data.items = [];
-||||||| merged common ancestors
-      vm.$data.items = [];
-=======
->>>>>>> e364ea35dd4c362a311305b4cbe5522b6a608035
+      // FIXME: Too frequent http request 
+      let xhr = new XMLHttpRequest();
+      xhr.open("GET", CONFIG.GET_ALL_OBJ, true);
+      xhr.onreadystatechange = function() {
+        if (xhr.readyState == 4) {
+          let response = JSON.parse(xhr.responseText);
+          for(let s in response){
+            console.log(s);
+            console.log(response[s])
+            console.log(response[s][0])
+            vm.$data.items[s] = response[s][0];
+          }
+        }
+      }
+      xhr.send(null)
+      /*
       for (var i=0;i<this.options.length;i++) {
         let form = new FormData();
         let xhr = new XMLHttpRequest();
@@ -106,7 +110,8 @@ export default Vue.extend({
         };
         xhr.send(form);
       }
-      console.log(this.$data.items);
+      */
+      // console.log(this.$data.items);
       this.tableData = [];
       var tempdic={};
       for (var i=0;i<this.options.length;i++) {
@@ -115,7 +120,7 @@ export default Vue.extend({
         tempdic['status'] = this.items[this.options[i]];
         this.tableData.push(tempdic);
       }
-      console.log(this.tableData);
+      // console.log(this.tableData);
       var name = "";
       this.namefilter = []
       for (var i=0;i<this.options.length;i++) {
@@ -130,9 +135,7 @@ export default Vue.extend({
       this.stopHandler = setInterval(this.getObjectState, CONFIG.UPDATE_INTERVAL);
     },
     Back: function() {
-      if(this.stopHandler !== undefined) {
-        this.clearInterval(this.stopHandler);
-      }
+      this.clearInterval(this.stopHandler);
     },
     DefineTag: function() {
       if(this.stopHandler !== undefined) {

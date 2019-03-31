@@ -28,11 +28,12 @@ export const LABEL = {
 }
 
 export const CONFIG = {
-  UPDATE_INTERVAL: 100,
+  UPDATE_INTERVAL: 500,
   saveAPI: 'http://localhost:8888/save-tag',
   GET_OBJ: serverHost + '/get-objects',
   GET_TOGGLE: serverHost + '/get-toggle',
   GET_TOGGLE_ACTION: serverHost + '/get-toggle-action',
+  GET_ALL_OBJ: serverHost + '/all-objects-state',
   SEM_POST: serverHost + '/get-object-sem',
   OBJ_LIST: 8,
   DEBUG: false,
