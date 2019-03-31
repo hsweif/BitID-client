@@ -51,10 +51,10 @@ export default Vue.extend({
   data() {
     return {
       selectedObj: "",
-      items: [],
+      items: ['put down'],
       namefilter:[],
       stopHandler: undefined,
-      options:['ste','ahs'],
+      options:['trophy'],
       tableData: [],
     };
   },
@@ -77,7 +77,7 @@ export default Vue.extend({
     getObjectState: function() {
       let xhr = new XMLHttpRequest();
       let vm = this;
-      vm.$data.items = [];
+      // vm.$data.items = [];
       for (var i=0;i<this.options.length;i++) {
         let form = new FormData();
         form.append("objName", this.options[i]);
@@ -99,6 +99,7 @@ export default Vue.extend({
         tempdic['status'] = this.items[i];
         this.tableData.push(tempdic);
       }
+      console.log(this.tableData);
       var name = "";
       this.namefilter = []
       for (var i=0;i<this.options.length;i++) {
