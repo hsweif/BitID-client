@@ -69,7 +69,7 @@
               :maxlength="4"
             ></i-input>
           </FormItem>
-          <FormItem label="Data type" v-if="showModal">
+          <FormItem label="Related object" v-if="showModal">
             <Select v-model="modalFormData.dict" filterable @on-change="handleDataDictChange">
               <!-- value绑定json字符串的原因是，需要用到parent_name，当handleDataDictChange触发，赋值到modalFormData -->
               <Option
@@ -81,9 +81,6 @@
               >{{ item.label }}</Option>
             </Select>
           </FormItem>
-          <FormItem label="placeholder：" v-if="typeof modalFormData.placeholder != 'undefined'">
-            <i-input v-model="modalFormData.placeholder" placeholder></i-input>
-          </FormItem>
         </Form>
         <div slot="footer">
           <Button type="text" @click="handleCancel">Cancel</Button>
@@ -94,10 +91,10 @@
     <i-row>
       <i-col span="12">
         <div class="b-a">
-          <span >
+          <span style="font-size: 18px; margin: 25px">
             Condition information.
           </span>
-          <li v-for="(sem,cnt) in semanticList">
+          <li v-for="(sem,cnt) in semanticList" style="font-size: 14px; margin-left: 25px">
             Semantic {{cnt+1}}:
             If (
             <span v-for="con in sem.condition">
@@ -209,7 +206,9 @@ export default {
       tagData["Semantic"].push(correlateCase);
       this.semanticList.push(correlateCase)
       this.sortable_item = []
-      alert(JSON.stringify(this.$data.semanticList));
+      this.condition = []
+      this.toggle = []
+      // alert(JSON.stringify(this.$data.semanticList));
     },
     // modal内数据字典选项发生改变触发事件
     handleDataDictChange(val) {

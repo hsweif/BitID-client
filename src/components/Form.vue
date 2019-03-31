@@ -84,7 +84,7 @@ export default {
               {
                 type: "select",
                 label: "Sensing type",
-                values: ["persistant", "non-persistant"],
+                values: ["open", "short"],
                 model: "Sensing Type"
               }
             ]

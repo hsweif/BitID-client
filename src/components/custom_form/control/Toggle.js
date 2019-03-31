@@ -40,13 +40,7 @@ export let toggleConf = {
   // 是否必填
   require: true,
   // 选项内数据
-  items: Array.apply(null, { length: 5 })
-    .map((k, v) => {
-      return {
-        label_value: v + 1,
-        label_name: "Toggle" + (v + 1),
-      }
-    }),
+  items: [],
   // 绑定的值
   value: '',
   // 表单name

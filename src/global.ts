@@ -28,7 +28,7 @@ export const LABEL = {
 }
 
 export const CONFIG = {
-  UPDATE_INTERVAL: 50,
+  UPDATE_INTERVAL: 100,
   saveAPI: 'http://localhost:8888/save-tag',
   GET_OBJ: serverHost + '/get-objects',
   GET_TOGGLE: serverHost + '/get-toggle',
