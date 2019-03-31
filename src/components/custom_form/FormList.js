@@ -3,13 +3,14 @@ import { selectConf } from "./control/Select";
 import { radioConf } from "./control/Radio";
 import { titleConf } from "./control/Title";
 import { hrConf } from "./control/Hr";
-import { pConf } from "./control/P";
+import { pConf} from "./control/P";
 import { toggleConf } from "./control/Toggle"
 import { cascaderConf } from "./control/Cascader";
 
 const formList = {
   title: titleConf,
   hr: hrConf,
+  p: pConf,
   select: selectConf,
   toggle: toggleConf
 };
