@@ -118,6 +118,7 @@
 // If {{sem.contidion.object}}: {{sem.condition.semantic}} then {{sem.toggle.object}}: {{sem.toggle.control}}.
 import draggable from "vuedraggable";
 import form_list from "./custom_form/FormList";
+import router from "../router/index";
 import {
   tagData,
   epcAPI,
@@ -166,7 +167,7 @@ export default {
             alert(tagData);
           }
           alert('Successfully submitted')
-          router.replace({ name: "Home" });
+          router.push({ name: "Home" });
           vm.handleReset();
           reset();
         }
@@ -175,6 +176,7 @@ export default {
       if (CONFIG.DEBUG) {
         alert(JSON.stringify(this.formData));
       }
+      router.push({ name: "Home" });
     },
     processSortableItem() {
       let processedItems = [];
