@@ -125,7 +125,8 @@ import {
   changeEpc,
   serverHost,
   LABEL,
-  CONFIG
+  CONFIG,
+  reset
 } from "../global";
 export default {
   components: {
@@ -164,9 +165,10 @@ export default {
           if (CONFIG.DEBUG) {
             alert(tagData);
           }
-          reset();
-          vm.sortable_item = [];
+          alert('Successfully submitted')
           router.replace({ name: "Home" });
+          vm.handleReset();
+          reset();
         }
       };
       xhr.send(form);
@@ -253,7 +255,6 @@ export default {
               label: obj.parent_name,
               parent_name: null
             });
-            router.replace({ name: "Notification" });
           }
         };
         xhr.send(form);
@@ -276,7 +277,6 @@ export default {
               label: obj.parent_name,
               parent_name: null
             });
-            router.replace({ name: "Notification" });
           }
         };
         xhr.send(form);
