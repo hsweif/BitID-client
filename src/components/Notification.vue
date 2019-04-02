@@ -29,6 +29,11 @@
         prop="status"
         label="Status">
       </el-table-column>
+      <el-table-column>
+        <template scope="scope">
+      <el-button class="button3"  type="danger" icon="el-icon-close" @click="handleDelete(scope.$index, scope.$row)">Delete</el-button>
+        </template>
+      </el-table-column>
     </el-table>
       <!-- <el-card class="box-card">
         <div v-for="item in items" :key="item" class="text item">
@@ -73,6 +78,10 @@ export default Vue.extend({
         }
       };
       xhr.send(null);
+    },
+    handleDelete: function(index, row){
+      alert(index);
+      alert(row);
     },
     getObjectState: function() {
       let vm = this;

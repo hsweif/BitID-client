@@ -24,6 +24,7 @@ export default {
     return {
       selected: "A",
       options: epcList,
+      updateHandler: undefined,
       model: {
         EPC: "",
         TagType: "",
@@ -36,7 +37,8 @@ export default {
             fields: [
               {
                 type: "label",
-                label: "Automatically detect or manually input the EPC of the new tag."
+                label:
+                  "Automatically detect or manually input the EPC of the new tag."
               },
               {
                 type: "input",
@@ -50,20 +52,27 @@ export default {
                     label: "Detect",
                     onclick: function(model) {
                       let xhr = new XMLHttpRequest();
-                      let vm = this;
-                      let v = model;
-                      setInterval(() =>{
+                      let v = this.$data.model;
+                      this.label = "Confirm";
+                      this.updateHandler = setInterval(() => {
                         xhr.open("GET", epcAPI, true);
-                        xhr.timeout = 3000;
                         xhr.onreadystatechange = function() {
                           if (xhr.readyState == 4) {
-                            if(xhr.responseText != 'None') {
+                            if (xhr.responseText != "None") {
                               v.EPC = xhr.responseText;
                             }
                           }
                         };
                         xhr.send(null);
-                      }, CONFIG.UPDATE_INTERVAL)
+                      }, CONFIG.UPDATE_INTERVAL);
+                    }
+                  },
+                  {
+                    classes: "confirm_btn",
+                    label: "Confirm",
+                    onclick: function(model) {
+                      clearInterval(this.updateHandler);
+                      this.updateHandler = undefined;
                     }
                   }
                 ]
@@ -103,15 +112,12 @@ export default {
                     tagData["TagType"] = model.TagType;
                     tagData["SensingType"] = model.SensingType;
                     router.push({ name: model.TagType });
-                  } 
+                  }
                 }
               }
             ]
           }
         ]
-      },
-      ready: function() {
-        // this.getPeoples();
       },
       formOptions: {
         validateAfterLoad: true,
@@ -124,7 +130,7 @@ export default {
 </script>
 
 <style scoped>
-.panel-body{
+.panel-body {
   width: 80%;
   margin-left: 10%;
   height: 600px;
