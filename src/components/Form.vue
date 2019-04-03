@@ -52,7 +52,7 @@ export default {
                     label: "Detect",
                     onclick: function(model) {
                       let xhr = new XMLHttpRequest();
-                      let v = this.$data.model;
+                      let v = model;
                       this.label = "Confirm";
                       this.updateHandler = setInterval(() => {
                         xhr.open("GET", epcAPI, true);
