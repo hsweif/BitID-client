@@ -29,11 +29,6 @@
         prop="status"
         label="Status">
       </el-table-column>
-      <el-table-column>
-        <template scope="scope">
-      <el-button class="button3"  type="danger" icon="el-icon-close" @click="handleDelete(scope.$index, scope.$row)">Delete</el-button>
-        </template>
-      </el-table-column>
     </el-table>
       <!-- <el-card class="box-card">
         <div v-for="item in items" :key="item" class="text item">

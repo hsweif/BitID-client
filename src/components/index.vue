@@ -176,7 +176,6 @@ export default {
       if (CONFIG.DEBUG) {
         alert(JSON.stringify(this.formData));
       }
-      router.push({ name: "Home" });
     },
     processSortableItem() {
       let processedItems = [];
