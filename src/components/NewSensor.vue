@@ -11,11 +11,11 @@
       <objList class="input2" @selectList="getSelected"></objList>
   </tr>
     <tr>
-      <span class="mytext">When the tag is visible, the object is:</span>
+      <span class="mytext">When {{on_state}}, the object is:</span>
       <input class="input3" v-model="on_semantic" placeholder="e.g. open">
     </tr>
     <tr>
-      <span class="mytext">When the tag is invisible, the object is:</span>
+      <span class="mytext">When {{off_state}}, the object is:</span>
       <input class="input4" v-model="off_semantic" placeholder="e.g. close">
     </tr>
     <tr>
@@ -27,7 +27,7 @@
 
 <script lang="ts">
 import Vue from "vue";
-import { tagData, serverHost, reset, CONFIG } from "../global";
+import { tagData, serverHost, reset, CONFIG, INSTRUCT } from "../global";
 import router from "../router/index";
 import ObjectList from "./ObjectList.vue";
 Vue.component("objList", ObjectList);
@@ -39,7 +39,9 @@ export default Vue.extend({
       picked: "",
       objectName: "",
       state: "",
-      semantic: ""
+      semantic: "",
+      on_state: "",
+      off_state: "" 
     };
   },
   methods: {
@@ -66,6 +68,16 @@ export default Vue.extend({
     },
     getSelected: function(msg) {
       this.objectName = msg;
+    }
+  },
+  created(){
+    if(tagData.SensingType === 'open'){
+      this.on_state = INSTRUCT.sensor.open_on;
+      this.off_state = INSTRUCT.sensor.open_off;
+    }
+    else{
+      this.on_state = INSTRUCT.sensor.short_on;
+      this.off_state = INSTRUCT.sensor.short_off;
     }
   }
 });

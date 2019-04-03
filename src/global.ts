@@ -40,3 +40,17 @@ export const CONFIG = {
   OBJ_BOUND: 100,
   TOGGLE_BOUND: 10000
 }
+
+/**
+ * Short and open refers to two type of RFID deployment
+ * on: the signal is visible to the reader
+ * off: the signal is invisible to the reader
+ */
+export const INSTRUCT = {
+  sensor: {
+    short_on: 'the RFID tag is not contacted with the metal plate',
+    short_off: 'the RFID tag is contacted with the metal plate',
+    open_on: 'the two parts are contacted',
+    open_off: 'the two parts are not contacted'
+  }
+}
