@@ -50,7 +50,7 @@ export const INSTRUCT = {
   sensor: {
     short_on: 'the RFID tag is not contacted with the metal plate',
     short_off: 'the RFID tag is contacted with the metal plate',
-    open_on: 'the two parts are contacted',
-    open_off: 'the two parts are not contacted'
+    open_off: 'the two parts are contacted',
+    open_on: 'the two parts are not contacted'
   }
 }

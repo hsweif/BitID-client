@@ -71,7 +71,7 @@ export default Vue.extend({
     }
   },
   created(){
-    if(tagData.SensingType === 'open'){
+    if(tagData["SensingType"] === 'open'){
       this.on_state = INSTRUCT.sensor.open_on;
       this.off_state = INSTRUCT.sensor.open_off;
     }

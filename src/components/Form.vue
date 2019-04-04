@@ -94,7 +94,7 @@ export default {
                 type: "select",
                 label: "Sensing type",
                 values: ["open", "short"],
-                model: "Sensing Type"
+                model: "SensingType"
               }
             ]
           },
