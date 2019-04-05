@@ -10,6 +10,9 @@
       <el-tooltip effect="dark" content="Add a new tag" placement="top">
         <el-button class="button3"  type="primary" icon="el-icon-edit" circle v-on:click="DefineTag"></el-button>
       </el-tooltip>
+      <el-tooltip effect="dark" content="delete a tag" placement="top">
+        <el-button class="button4"  type="danger" icon="el-icon-delete" circle v-on:click="DeleteTag"></el-button>
+      </el-tooltip>
     </div>
     <!-- <div class = "second">
     <objList class="myobjlist" @selectList="getSelected"></objList>
@@ -17,7 +20,12 @@
     <div class="vfor">
       <el-table
       :data="tableData"
-      style="width: 100%">
+      style="width: 100%"
+      @selection-change="handleSelectionChange">
+    <el-table-column
+      type="selection"
+      width="55">
+    </el-table-column>
       <el-table-column
         prop="name"
         label="Object"
@@ -45,17 +53,20 @@ import Vue from "vue";
 import { tagData, serverHost, CONFIG } from "../global";
 import router from "../router/index";
 import ObjectList from "./ObjectList.vue";
+import axios from 'axios';
+import VueAxios from 'vue-axios';
 Vue.component("objList", ObjectList);
 
 export default Vue.extend({
   data() {
     return {
       selectedObj: "",
-      items: {},
+      items: {trophy:'turn off'},
       namefilter:[],
       stopHandler: undefined,
       options:['trophy'],
       tableData: [],
+      multipleSelection: []
     };
   },
   methods: {
@@ -96,25 +107,6 @@ export default Vue.extend({
         }
       }
       xhr.send(null)
-      /*
-      for (var i=0;i<this.options.length;i++) {
-        let form = new FormData();
-        let xhr = new XMLHttpRequest();
-        let objName = this.options[i];
-        form.append("objName", objName);
-        xhr.open("POST", serverHost + "/get-object-state", true);
-        xhr.onreadystatechange = function() {
-          if (xhr.readyState == 4) {
-            let response = JSON.parse(xhr.responseText);
-            vm.$data.items[objName] = response["info"][0]
-            if(objName == 'book'){
-              console.log(response["info"][0])
-            }
-          }
-        };
-        xhr.send(form);
-      }
-      */
       // console.log(this.$data.items);
       this.tableData = [];
       var tempdic={};
@@ -149,12 +141,32 @@ export default Vue.extend({
       this.StopUpdate();
       router.push({name: 'Form'});
     },
+     DeleteTag: function() {
+       var item;
+       console.log("here");
+       var name;
+       for(item in this.multipleSelection) {
+          name = this.options[item];
+          var data = {'objName':name};
+          this.axios
+            .post(serverHost + "/remove-object", this.qs.stringify(data))
+            .then(res => {
+              console.log("删除成功");
+            })
+            .catch(err => {
+              console.log(err);
+            });
+       }
+    },
     created(){
       this.Refresh();
     },
     filterTag(value, row) {
       return row.name === value;
-    }
+    },
+    handleSelectionChange(val) {
+        this.multipleSelection = val;
+      }
   }
 });
 </script>
