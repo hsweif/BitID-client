@@ -61,10 +61,10 @@ export default Vue.extend({
   data() {
     return {
       selectedObj: "",
-      items: {trophy:'turn off'},
+      items: {},
       namefilter:[],
       stopHandler: undefined,
-      options:['trophy'],
+      options:[],
       tableData: [],
       multipleSelection: []
     };
@@ -143,11 +143,12 @@ export default Vue.extend({
     },
      DeleteTag: function() {
        var item;
-       console.log("here");
+       console.log("Delete!!!!");
        var name;
+      //  console.log(this.multipleSelection)
        for(item in this.multipleSelection) {
-          name = this.options[item];
-          var data = {'objName':name};
+          // name = this.tableData[item];
+          var data = {'objName':this.multipleSelection[item]['name']};
           this.axios
             .post(serverHost + "/remove-object", this.qs.stringify(data))
             .then(res => {

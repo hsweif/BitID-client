@@ -5,8 +5,8 @@ export let tagData = {
   Semantic: []
 }
 
-export const epcAPI = 'http://localhost:8888/update-epc'
-export const serverHost = 'http://localhost:8888'
+export const epcAPI = 'http://192.168.3.156:8888/update-epc'
+export const serverHost = 'http://192.168.3.156:8888'
 export let epcList = [1,3,4]
 
 
@@ -28,8 +28,8 @@ export const LABEL = {
 }
 
 export const CONFIG = {
-  UPDATE_INTERVAL: 500,
-  saveAPI: 'http://localhost:8888/save-tag',
+  UPDATE_INTERVAL: 200,
+  saveAPI: 'http://192.168.3.156:8888/save-tag',
   GET_OBJ: serverHost + '/get-objects',
   GET_TOGGLE: serverHost + '/get-toggle',
   GET_TOGGLE_ACTION: serverHost + '/get-toggle-action',
@@ -48,9 +48,9 @@ export const CONFIG = {
  */
 export const INSTRUCT = {
   sensor: {
-    short_on: 'the RFID tag is not contacted with the metal plate',
-    short_off: 'the RFID tag is contacted with the metal plate',
-    open_off: 'the two parts are contacted',
-    open_on: 'the two parts are not contacted'
+    short_on: 'the two parts are NOT contacted',
+    short_off: 'the two parts are contacted',
+    open_on: 'the two parts are contacted',
+    open_off: 'the two parts are NOT contacted'
   }
 }
