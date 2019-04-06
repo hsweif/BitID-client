@@ -20,6 +20,7 @@
     "iview-area": "^1.5.17",
     "moment": "^2.22.0",
     "vue": "^2.5.2",
+    "vue-axios": "^2.1.4",
     "vue-class-component": "^7.0.1",
     "vue-form-generator": "^2.3.4",
     "vue-multiselect": "^2.1.4",
