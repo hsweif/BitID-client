@@ -54,6 +54,8 @@ export default {
                       let xhr = new XMLHttpRequest();
                       let v = model;
                       this.label = "Confirm";
+                      clearInterval(this.updateHandler);
+                      this.updateHandler = undefined;
                       this.updateHandler = setInterval(() => {
                         xhr.open("GET", epcAPI, true);
                         xhr.onreadystatechange = function() {

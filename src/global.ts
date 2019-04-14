@@ -5,8 +5,8 @@ export let tagData = {
   Semantic: []
 }
 
-export const epcAPI = 'http://192.168.3.156:8888/update-epc'
-export const serverHost = 'http://192.168.3.156:8888'
+export const serverHost = 'http://localhost:8888'
+export const epcAPI = serverHost + '/update-epc'
 export let epcList = [1,3,4]
 
 
@@ -14,7 +14,7 @@ export function changeEpc () {
   epcList = [3,4,3];
 }
 
-export function reset(){
+export function reset() {
   tagData = {
     EPC: '',
     TagType: '',
@@ -29,7 +29,7 @@ export const LABEL = {
 
 export const CONFIG = {
   UPDATE_INTERVAL: 200,
-  saveAPI: 'http://192.168.3.156:8888/save-tag',
+  saveAPI: serverHost + '/save-tag',
   GET_OBJ: serverHost + '/get-objects',
   GET_TOGGLE: serverHost + '/get-toggle',
   GET_TOGGLE_ACTION: serverHost + '/get-toggle-action',
