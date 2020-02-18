@@ -19,24 +19,43 @@ npm start
 
 Then you can visit `localhost:8080` to use the client.
 
-# Step-by-step tutorial
+# How to use?
 
-## Step1: Define the RFID tag
+## Homepage
 
-![](./img/start.png)
+![](./img/home.png)
+
+You can view all the registered objects states here, and you can add or remove a new tag here.
+
+## Add a new tag
+
+## Step1: Input/Detect the EPC
+
+![](./img/define-step1.png)
 
 You can manually input the EPC of the BitID tag or approach the tag to the antenna to automatically detect it.
 
 ## Step2: Assign the category
 
-![](./img/type.png)
+![](./img/define-type.png)
 
-Interaction: the tag is related to an object interactable, like a lamp.
+Interaction: the tag is related to an object interactable, like a lamp. You will required to define the behavior of the tag later.
 
 Sensor: the tag is related to objects that reflect states rather than control something.
 
-## Step3:
+![](./img/define-sensing-type.png)
 
-![](./img/step3.png)
+Besides, you need to decide whether the sensing type is open or short. Please refer the paper for the definition of the type.
 
-Manually input the objects related to this tag, or choose from the existed ones.
+## Step3: Define an interaction
+
+![](./img/interaction.png)
+
+As you can see, there are two items to select here. You could drag the "object" to the left box, and select an object and its specific state from the list. On the other hand, you should drag "Control" to the right, which means when the condition defined by the left side meets, the behavior should be triggered.
+
+For example, you can drag two "Object" list to the left. One of them may be "Door -> opened" while another one may be a "Drawer -> opened".
+
+> The states are defined when you select "sensor" in step-2.
+
+And the after dragging "Control" to the right and select "Play the music" maybe, you can add the behavior.
+What you have done means "When the door is opened and the drawer is opened as well, play the music."
