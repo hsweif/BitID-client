@@ -3,16 +3,17 @@
 This repository is for the BitID frontend, which is a web-based app. With the client, the users can customize the behavior when som specific BitID sensors' states change. For example, one could easily define "when the door is open and the chair is sitten, turn on the lamp", with the GUI.
 
 **You should use the client along with the backend, AutoID-Server, to support RFID tags sensing and objects controlling.**
+[Backend repo](https://github.com/AlexFxw/AutoID-server)
 
-# Environment
+## Environment
 
 node@8.16.0
 
 TypeScript, Vue.js, Element-UI
 
-# Usage
+## Usage
 
-## Installation
+### Installation
 
 ```bash
 git submodule init
@@ -20,7 +21,7 @@ git submodule update
 npm i
 ```
 
-## Run
+### Run
 
 ```bash
 npm start
@@ -28,23 +29,23 @@ npm start
 
 Then you can visit `localhost:8080` to use the client.
 
-# How to use?
+## How to use?
 
-## Homepage
+### Homepage
 
 ![](./img/home.png)
 
 You can view all the registered objects states here, and you can add or remove a new tag here.
 
-## How to add a new tag?
+### How to add a new tag?
 
-### Step1: Input/Detect the EPC
+#### Step1: Input/Detect the EPC
 
 ![](./img/define-step1.png)
 
 You can manually input the EPC of the BitID tag or approach the tag to the antenna to automatically detect it.
 
-### Step2: Assign the category
+#### Step2: Assign the category
 
 ![](./img/define-type.png)
 
@@ -56,13 +57,13 @@ Sensor: the tag is related to objects that reflect states rather than control so
 
 Besides, you need to decide whether the sensing type is open or short. Please refer the paper for the definition of the type.
 
-### Step3: Define a sensor
+#### Step3: Define a sensor
 
 ![](./img/sensor.png)
 
 If you select "sensor" type in step 2, you will see the page above. You can define what object is the tag attached to, and you can define the semantic meaning of the ON/OFF state. After defining the sensors, you could use it to customize an interaction for an interaction tag.
 
-### Step4: Define an interaction
+#### Step4: Define an interaction
 
 ![](./img/interaction.png)
 
