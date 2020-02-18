@@ -1,0 +1,30 @@
+{
+    "items": [{
+            "id": 1,
+            "label": "object",
+            "type": "input",
+            "placeholder": "input the object name",
+            "parent_name": null
+        },
+        {
+            "id": 3,
+            "label": "semantic meaning",
+            "type": "input",
+            "parent_name": null
+        },
+        {
+            "id": 4,
+            "label": "tag state",
+            "type": "radio",
+            "parent_name": null
+        },
+        {
+            "id": 5,
+            "label": "related state",
+            "type": "radio",
+            "parent_name": null
+        }
+    ],
+    "status": "success",
+    "code": 200
+}

@@ -1,0 +1,14 @@
+{
+  "items": [{
+      "label_value": "0",
+      "label_name": "Detected"
+    },
+    {
+      "label_value": "1",
+      "label_name": "Undetected"
+    }
+  ],
+  "status": "success",
+  "code": 200,
+  "name": "tag state"
+}

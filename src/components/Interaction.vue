@@ -1,69 +1,89 @@
 <template>
-  <div class="interaction-body">
-    <vue-form-generator :schema="schema" :model="model" :options="formOptions"></vue-form-generator>
-  </div>
+<table border="1" style="float: middle">
+  <tr>
+      <span>Please define the tag behavior:</span>
+  </tr>
+  <tr>
+      <span>Combination behavior. (with other objects)</span>
+  </tr>
+  <tr>
+      <span>If this object is</span>
+      <select v-model="self_state">
+        <option disabled value>Define the state</option>
+        <option>ON</option>
+        <option>OFF</option>
+      </select>
+      <span>and the object (optional)</span>
+  </tr>
+  <tr>
+      <input v-model="relatedObj" placeholder="Input manually">
+      <objList @selectList="getSelected"></objList>
+  </tr>
+  <tr>
+      <span>is on state</span>
+      <select v-model="relatedState">
+        <option disabled value>Unselected</option>
+        <option>ON</option>
+        <option>OFF</option>
+      </select>
+  </tr>
+  <tr>
+      <span>then the semantic meaning is:</span>
+      <input v-model="sem_comb">
+  </tr>
+  <tr>
+    <td>
+      <button v-on:click="Add">Add</button>
+    </td>
+    <td>
+      <button v-on:click="Submit">Submit</button>
+    </td>
+  </tr>
+</table>
 </template>
 
-<script>
+<script lang="ts">
 import Vue from "vue";
-import VueFormGenerator from "vue-form-generator";
-import "vue-form-generator/dist/vfg.css";
+import { tagData, serverHost, reset, CONFIG } from "../global";
 import router from "../router/index";
-Vue.use(VueFormGenerator);
-
-export default {
-  name: "Interaction",
+export default Vue.extend({
   data() {
     return {
-      model: {
-        RFID: "",
-        Objects: []
-      },
-      schema: {
-        groups: [
-          {
-            legend: "Step3. Define interaction behavior",
-            fields: [
-              {
-                label:
-                  "1. Do you want to input manully or select from existed objects?",
-                type: "select",
-                values: ["Manually input", "Select from existed list"]
-              },
-              {
-                type: "input",
-                inputType: "text",
-                model: "RFID",
-                label: "2. Input the related objects of this tag."
-              },
-              {
-                type: "select",
-                model: "RFID",
-                label: "or choose from the list",
-                values: []
-              }
-            ]
-          },
-          {
-            fields: [
-              {
-                type: "submit",
-                buttonText: "Submit",
-                onSubmit: function(model) {
-                  alert(JSON.stringify(model));
-                  router.replace({ name: "Form" });
-                }
-              }
-            ]
-          }
-        ]
-      },
-      formOptions: {
-        validateAfterLoad: true,
-        validateAfterChanged: true,
-        validateAsync: true
-      }
+      semControl: "",
+      RelatedObject: "",
+      relatedState: "",
+      self_state: "",
+      sem_comb: ""
     };
+  },
+  methods: {
+    Add: function() {
+      let correlateCase = {
+        State: this.self_state,
+        RelatedObject: this.RelatedObject,
+        RelatedObjState: this.relatedState,
+        Behavior: this.sem_comb
+      };
+      tagData["Semantic"].push(correlateCase);
+      alert("successfully add");
+    },
+    Submit: function() {
+      let xhr = new XMLHttpRequest();
+      let form = new FormData();
+      form.append("content", JSON.stringify(tagData));
+      xhr.open("POST", CONFIG.saveAPI, true);
+      xhr.onreadystatechange = function() {
+        if (xhr.readyState == 4) {
+          alert("successfully submitted");
+          reset();
+          router.replace({ name: "Form" });
+        }
+      };
+      xhr.send(form);
+    },
+    getSelected: function(msg) {
+      this.RelatedObject = msg;
+    }
   }
-};
+});
 </script>
