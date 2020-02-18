@@ -12,8 +12,17 @@ TypeScript, Vue.js, Element-UI
 
 # Usage
 
+## Installation
+
 ```bash
+git submodule init
+git submodule update
 npm i
+```
+
+## Run
+
+```bash
 npm start
 ```
 
